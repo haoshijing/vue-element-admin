@@ -7,7 +7,7 @@
         <span class="svg-container svg-container_login">
           <icon-svg icon-class="user" />
         </span>
-        <el-input name="username" type="text" v-model="loginForm.username" autoComplete="on" placeholder="邮箱" />
+        <el-input name="username" type="text" v-model="loginForm.name" autoComplete="on" placeholder="请输入用户名" />
       </el-form-item>
 
       <el-form-item prop="password">
@@ -15,24 +15,26 @@
           <icon-svg icon-class="password" />
         </span>
         <el-input name="password" :type="pwdType" @keyup.enter.native="handleLogin" v-model="loginForm.password" autoComplete="on"
-          placeholder="密码" />
+          placeholder="请输入密码" />
         <span class='show-pwd' @click='showPwd'><icon-svg icon-class="eye" /></span>
       </el-form-item>
 
       <el-button type="primary" style="width:100%;margin-bottom:30px;" :loading="loading" @click.native.prevent="handleLogin">登录</el-button>
 
-      <div class='tips'>账号:admin 密码随便填</div>
+      <div class='tips'>{{loginTips}}</div>
+      <!--
       <div class='tips'>账号:editor  密码随便填</div>
 
       <el-button class='thirdparty-button' type="primary" @click='showDialog=true'>打开第三方登录</el-button>
+       -->
     </el-form>
-
+  <!--
     <el-dialog title="第三方验证" :visible.sync="showDialog">
       本地不能模拟，请结合自己业务进行模拟！！！<br/><br/><br/>
       邮箱登录成功,请选择第三方验证<br/>
       <social-sign />
     </el-dialog>
-
+    -->
   </div>
 </template>
 
@@ -60,11 +62,12 @@ export default {
     }
     return {
       loginForm: {
-        username: 'admin',
-        password: '1111111'
+        name: 'superadmin',
+        password: ''
       },
+      loginTips: '',
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
+        name: [{ required: true, trigger: 'blur', validator: validateUsername }],
         password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
       pwdType: 'password',
@@ -84,10 +87,13 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('LoginByUsername', this.loginForm).then(() => {
+          this.$store.dispatch('LoginByUsername', this.loginForm).then((succ) => {
             this.loading = false
-            this.$router.push({ path: '/' })
-                // this.showDialog = true
+            if (succ) {
+              this.$router.push({ path: '/' })
+            } else {
+              this.loginTips = '用户名或者密码错误'
+            }
           }).catch(() => {
             this.loading = false
           })
@@ -98,22 +104,7 @@ export default {
       })
     },
     afterQRScan() {
-          // const hash = window.location.hash.slice(1)
-          // const hashObj = getQueryObject(hash)
-          // const originUrl = window.location.origin
-          // history.replaceState({}, '', originUrl)
-          // const codeMap = {
-          //   wechat: 'code',
-          //   tencent: 'code'
-          // }
-          // const codeName = hashObj[codeMap[this.auth_type]]
-          // if (!codeName) {
-          //   alert('第三方登录失败')
-          // } else {
-          //   this.$store.dispatch('LoginByThirdparty', codeName).then(() => {
-          //     this.$router.push({ path: '/' })
-          //   })
-          // }
+
     }
   },
   created() {
