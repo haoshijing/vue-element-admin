@@ -69,12 +69,12 @@ const user = {
           if (!response.data) { // 由于mockjs 不支持自定义状态码只能这样hack
             reject('error')
           }
-          const data = response.data
+          const data = response.data.data
           commit('SET_ROLES', data.role)
           commit('SET_NAME', data.name)
           commit('SET_AVATAR', data.avatar)
           commit('SET_INTRODUCTION', data.introduction)
-          resolve(response)
+          resolve(data)
         }).catch(error => {
           reject(error)
         })

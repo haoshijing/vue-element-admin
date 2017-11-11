@@ -27,7 +27,7 @@ export const constantRouterMap = [
     name: '首页',
     hidden: true,
     children: [{ path: 'dashboard', component: _import('dashboard/index') }]
-  },
+  }/*,
   {
     path: '/introduction',
     component: Layout,
@@ -35,7 +35,7 @@ export const constantRouterMap = [
     icon: 'people',
     noDropdown: true,
     children: [{ path: 'index', component: _import('introduction/index'), name: '简述' }]
-  }
+  }*/
 ]
 
 export default new Router({
@@ -45,6 +45,32 @@ export default new Router({
 })
 
 export const asyncRouterMap = [
+  {
+    path: '/extend',
+    component: Layout,
+    redirect: '/extend/agent',
+    name: '权限测试',
+    icon: 'table',
+    meta: { role: ['admin'] },
+    noDropdown: true,
+    children: [{ path: 'index', component: _import('extend/agent/index'), name: '代理列表', meta: { role: ['admin'] }}]
+  },
+  {
+    path: '/extend',
+    component: Layout,
+    icon: 'table',
+    redirect: '/extend/pick',
+    noDropdown: true,
+    children: [{ path: 'index', component: _import('svg-icons/index'), name: '充值列表' }]
+  },
+  {
+    path: '/icon',
+    component: Layout,
+    icon: 'table',
+    noDropdown: true,
+    children: [{ path: 'index', component: _import('svg-icons/index'), name: '操作日志' }]
+  },
+  /*
   {
     path: '/permission',
     component: Layout,
@@ -181,6 +207,6 @@ export const asyncRouterMap = [
     noDropdown: true,
     children: [{ path: 'index', component: _import('clipboard/index'), name: 'clipboard' }]
   },
-
+  */
   { path: '*', redirect: '/404', hidden: true }
 ]

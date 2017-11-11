@@ -1,6 +1,7 @@
 <template>
 	<div class="dashboard-editor-container">
 		<github></github>
+    <!--
 		<el-row class="btn-group">
 			<el-col :span="4" class='text-center'>
 				<router-link class="pan-btn blue-btn" to="/components/index">Components</router-link>
@@ -21,7 +22,7 @@
 				<router-link class="pan-btn yellow-btn" to="/theme/index">Theme</router-link>
 			</el-col>
 		</el-row>
-
+    -->
 		<el-row>
 			<el-col :span="6">
 				<el-card class="box-card">
