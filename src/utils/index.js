@@ -1,7 +1,6 @@
 /**
  * Created by jiachenpan on 16/11/18.
  */
-
  export function parseTime(time, cFormat) {
    if (arguments.length === 0) {
      return null
@@ -56,7 +55,6 @@
      return d.getMonth() + 1 + '月' + d.getDate() + '日' + d.getHours() + '时' + d.getMinutes() + '分'
    }
  }
-
 // 格式化时间
  export function getQueryObject(url) {
    url = url == null ? window.location.href : url
@@ -264,4 +262,9 @@
      }
    }
    return targetObj
+ }
+ export function getCurrentWeek() {
+   const currentTimestamp = new Date().getTime()
+   const firstDateTimeStamp = new Date(2017, 9, 22).getTime()
+   return (currentTimestamp - firstDateTimeStamp) / (7 * 3600 * 24 * 1000) + 1
  }

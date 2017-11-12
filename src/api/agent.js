@@ -1,9 +1,32 @@
-import fetch from '@/utils/fetch'
+import http from '@/utils/fetch'
 
 export function fetchAgentList(query) {
-  return fetch({
-    url: '/agent/list',
-    method: 'post',
-    params: query
-  })
+  return http.post(
+    '/agent/list',
+    JSON.stringify(query)
+  )
+}
+export function resetPwd(agentId) {
+  return http.get(
+    '/agent/resetPwd?agentId='.concat(agentId)
+  )
+}
+
+export function fetchAgentCount(query) {
+  return http.post(
+    '/agent/count',
+    JSON.stringify(query)
+  )
+}
+
+export function createUpdateAgent(agent) {
+  return http.post('agent/createUpdate'
+  , JSON.stringify(agent))
+}
+export function obtainChooseAreaAgentList(currentUserId) {
+  return http.get('agent/obtainChooseAreaAgentList?currentAgentId='.concat(currentUserId))
+}
+
+export function obtainChooseAgentList() {
+  return http.get('agent/obtainChooseAgentList')
 }

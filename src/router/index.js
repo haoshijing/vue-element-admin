@@ -27,15 +27,15 @@ export const constantRouterMap = [
     name: '首页',
     hidden: true,
     children: [{ path: 'dashboard', component: _import('dashboard/index') }]
-  }/*,
+  },
   {
-    path: '/introduction',
+    path: '/user/updatepwd',
     component: Layout,
-    redirect: '/introduction/index',
+    redirect: 'user/updatepwd',
     icon: 'people',
     noDropdown: true,
-    children: [{ path: 'index', component: _import('introduction/index'), name: '简述' }]
-  }*/
+    hidden: true
+  }
 ]
 
 export default new Router({
@@ -46,22 +46,20 @@ export default new Router({
 
 export const asyncRouterMap = [
   {
-    path: '/extend',
+    path: '/extend/agent',
     component: Layout,
-    redirect: '/extend/agent',
-    name: '权限测试',
     icon: 'table',
     meta: { role: ['admin'] },
     noDropdown: true,
     children: [{ path: 'index', component: _import('extend/agent/index'), name: '代理列表', meta: { role: ['admin'] }}]
   },
   {
-    path: '/extend',
+    path: '/extend/pick',
     component: Layout,
     icon: 'table',
     redirect: '/extend/pick',
     noDropdown: true,
-    children: [{ path: 'index', component: _import('svg-icons/index'), name: '充值列表' }]
+    children: [{ path: 'index', component: _import('extend/pick/index'), name: '充值列表' }]
   },
   {
     path: '/icon',

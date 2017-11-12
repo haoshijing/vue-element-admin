@@ -1,88 +1,90 @@
 <template>
   <div class="app-container calendar-list-container">
     <div class="filter-container">
-      <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" placeholder="标题" v-model="listQuery.title">
+      <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" placeholder="guid" v-model="listQuery.guid">
       </el-input>
-
-      <el-select clearable style="width: 90px" class="filter-item" v-model="listQuery.importance" placeholder="重要性">
-        <el-option v-for="item in importanceOptions" :key="item" :label="item" :value="item">
+      <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" placeholder="用户名" v-model="listQuery.userName">
+      </el-input>
+      <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" placeholder="微信号" v-model="listQuery.weChartNo">
+      </el-input>
+      <el-select clearable class="filter-item" style="width: 130px" v-model="listQuery.level" placeholder="代理类别">
+        <el-option v-for="item in proxyList" :key="item.key" :label="item.label" :value="item.key">
         </el-option>
       </el-select>
 
-      <el-select clearable class="filter-item" style="width: 130px" v-model="listQuery.type" placeholder="类型">
-        <el-option v-for="item in  calendarTypeOptions" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key">
-        </el-option>
-      </el-select>
-
-      <el-select @change='handleFilter' style="width: 120px" class="filter-item" v-model="listQuery.sort" placeholder="排序">
-        <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key">
-        </el-option>
-      </el-select>
+      <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" placeholder="昵称" v-model="listQuery.nickName">
+      </el-input>
 
       <el-button class="filter-item" type="primary" v-waves icon="search" @click="handleFilter">搜索</el-button>
       <el-button class="filter-item" style="margin-left: 10px;" @click="handleCreate" type="primary" icon="edit">添加</el-button>
-      <el-button class="filter-item" type="primary" icon="document" @click="handleDownload">导出</el-button>
-      <el-checkbox class="filter-item" @change='tableKey=tableKey+1' v-model="showAuditor">显示审核人</el-checkbox>
     </div>
 
-    <el-table :key='tableKey' :data="list" v-loading="listLoading" element-loading-text="给我一点时间" border fit highlight-current-row style="width: 100%">
+    <div>第3周</div>
+    <el-table :key='tableKey' :data="list" v-loading="listLoading" element-loading-text="正在加载" border fit highlight-current-row style="width: 100%">
 
-      <el-table-column align="center" label="序号" width="65">
+      <el-table-column align="center" label="代理编号">
         <template scope="scope">
-          <span>{{scope.row.id}}</span>
+          <span>{{scope.row.agentId}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column width="180px" align="center" label="时间">
+      <el-table-column  align="center" label="guid">
         <template scope="scope">
-          <span>{{scope.row.timestamp | parseTime('{y}-{m}-{d} {h}:{i}')}}</span>
+          <span lick='handleClipboard(scope.row.gameId,$event)'>{{scope.row.gameId}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column min-width="300px" label="标题">
+      <el-table-column  label="代理用户名">
         <template scope="scope">
-          <span class="link-type" @click="handleUpdate(scope.row)">{{scope.row.title}}</span>
-          <el-tag>{{scope.row.type | typeFilter}}</el-tag>
+          <span>{{scope.row.name}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column width="110px" align="center" label="作者">
+      <el-table-column  label="代理类别">
         <template scope="scope">
-          <span>{{scope.row.author}}</span>
+          <span>{{scope.row.type | typeFilter }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column width="110px" v-if='showAuditor' align="center" label="审核人">
+      <el-table-column  align="center" label="微信号">
         <template scope="scope">
-          <span style='color:red;'>{{scope.row.auditor}}</span>
+          <span>{{scope.row.weChartNo}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column width="80px" label="重要性">
+      <el-table-column  align="center" label="金豆">
         <template scope="scope">
-          <icon-svg v-for="n in +scope.row.importance" icon-class="star" class="meta-item__icon" :key="n"></icon-svg>
+          <span>{{scope.row.goldCount}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="阅读数" width="95">
+      <el-table-column  label="银豆">
         <template scope="scope">
-          <span class="link-type" @click='handleFetchPv(scope.row.pageviews)'>{{scope.row.pageviews}}</span>
+          <span>{{scope.row.sliverCount}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column class-name="status-col" label="状态" width="90">
+      <el-table-column align="center" label="下属总充值">
         <template scope="scope">
-          <el-tag :type="scope.row.status | statusFilter">{{scope.row.status}}</el-tag>
+          <span>{{scope.row.agentUnderTotalPickUp}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="操作" width="150">
+      <el-table-column align="center" label="充值总额">
         <template scope="scope">
-          <el-button v-if="scope.row.status!='published'" size="small" type="success" @click="handleModifyStatus(scope.row,'published')">发布
+          <span>{{scope.row.agentTotalPickUp}}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="left" label="操作" width="350" >
+        <template scope="scope">
+          <el-button  size="small" type="success" @click="handleUpdate(scope.row)">编辑
           </el-button>
-          <el-button v-if="scope.row.status!='draft'" size="small" @click="handleModifyStatus(scope.row,'draft')">草稿
+          <el-button  size="small" type="success" @click="handlerRetsetPwd(scope.row.agentId)">重置密码
           </el-button>
-          <el-button v-if="scope.row.status!='deleted'" size="small" type="danger" @click="handleModifyStatus(scope.row,'deleted')">删除
+          <el-button  size="small" type="success" @click="handlerQueryPlayer(scope.row)">查看玩家
+          </el-button>
+          <el-button v-if="scope.row.type === 2 " size="small" type="success" @click="handlerQueryPlayer(scope.row)">下属代理
           </el-button>
         </template>
       </el-table-column>
@@ -94,38 +96,45 @@
                      :page-sizes="[10,20,30, 50]" :page-size="listQuery.limit" layout="total, sizes, prev, pager, next, jumper" :total="total">
       </el-pagination>
     </div>
-
-    <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
+      <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form class="small-space" :model="temp" label-position="left" label-width="70px" style='width: 400px; margin-left:50px;'>
-        <el-form-item label="类型">
-          <el-select class="filter-item" v-model="temp.type" placeholder="请选择">
-            <el-option v-for="item in  calendarTypeOptions" :key="item.key" :label="item.display_name" :value="item.key">
+        <el-form-item label="用户名">
+          <el-input v-model="temp.userName" v-if = "!temp.id"></el-input>
+          <span v-if = "temp.id">{{temp.userName}}</span>
+        </el-form-item>
+
+        <el-form-item label="昵称">
+          <el-input v-model="temp.nickName"></el-input>
+        </el-form-item>
+
+        <el-form-item label="微信号">
+          <el-input v-model="temp.wechartNo" ></el-input>
+        </el-form-item>
+
+        <el-form-item label="代理级别">
+          <el-select class="filter-item" v-model="temp.level" placeholder="请选择">
+            <el-option v-for="item in  proxyList" :key="item.key" :label="item.label" :value="item.key">
             </el-option>
           </el-select>
         </el-form-item>
 
-        <el-form-item label="状态">
-          <el-select class="filter-item" v-model="temp.status" placeholder="请选择">
-            <el-option v-for="item in  statusOptions" :key="item" :label="item" :value="item">
+        <el-form-item label="guid">
+          <el-select class="filter-item"  v-if = "!temp.id" v-model="temp.guid" placeholder="请选择">
+            <el-option v-for="item in  chooseAgentList" :key="item" :label="item" :value="item">
+            </el-option>
+          </el-select>
+          <span v-if = "temp.id">{{temp.guid}}</span>
+        </el-form-item>
+
+        <el-form-item label="上级代理" v-if="temp.level == 3">
+          <el-select class="filter-item" v-model="temp.parentAgentId" placeholder="请选择">
+            <el-option v-for="item in  chooseAreaAgentList" :key="item.agentId" :label="item.wechartNo" :value="item.agentId">
             </el-option>
           </el-select>
         </el-form-item>
 
-        <el-form-item label="时间">
-          <el-date-picker v-model="temp.timestamp" type="datetime" placeholder="选择日期时间">
-          </el-date-picker>
-        </el-form-item>
-
-        <el-form-item label="标题">
-          <el-input v-model="temp.title"></el-input>
-        </el-form-item>
-
-        <el-form-item label="重要性">
-          <el-rate style="margin-top:8px;" v-model="temp.importance" :colors="['#99A9BF', '#F7BA2A', '#FF9900']"></el-rate>
-        </el-form-item>
-
-        <el-form-item label="点评">
-          <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入内容" v-model="temp.remark">
+        <el-form-item label="备注">
+          <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入内容" v-model="temp.memo">
           </el-input>
         </el-form-item>
       </el-form>
@@ -136,104 +145,103 @@
       </div>
     </el-dialog>
 
-    <el-dialog title="阅读数统计" :visible.sync="dialogPvVisible" size="small">
-      <el-table :data="pvData" border fit highlight-current-row style="width: 100%">
-        <el-table-column prop="key" label="渠道"> </el-table-column>
-        <el-table-column prop="pv" label="pv"> </el-table-column>
-      </el-table>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogPvVisible = false">确 定</el-button>
-      </span>
-    </el-dialog>
-
   </div>
 </template>
 
 <script>
   import { fetchAgentList } from '@/api/agent'
+  import { fetchAgentCount } from '@/api/agent'
+  import { createUpdateAgent } from '@/api/agent'
+  import { obtainChooseAreaAgentList } from '@/api/agent'
+  import { obtainChooseAgentList } from '@/api/agent'
+  import { resetPwd } from '@/api/agent'
+
   import waves from '@/directive/waves/index.js' // 水波纹指令
+  import clipboard from '@/utils/clipboard' // use clipboard directly
   import { parseTime } from '@/utils'
-
-  const calendarTypeOptions = [
-    { key: 'CN', display_name: '中国' },
-    { key: 'US', display_name: '美国' },
-    { key: 'JP', display_name: '日本' },
-    { key: 'EU', display_name: '欧元区' }
+  import { getCurrentWeek } from '@/utils'
+  const proxyList = [
+    { key: 2, label: '地区代理' },
+    { key: 3, label: '群主代理' }
   ]
-
-  // arr to obj
-  const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
-    acc[cur.key] = cur.display_name
-    return acc
-  }, {})
-
+  export function getAgentTypeName(type) {
+    const types = {
+      1: '总管理员',
+      2: '区域代理',
+      3: '群主代理'
+    }
+    return types[type]
+  }
   export default {
-    name: 'table_demo',
+    name: 'proxylist',
     directives: {
       waves
     },
     data() {
       return {
-        list: null,
-        total: null,
+        list: [],
+        chooseAgentList: [],
+        chooseAreaAgentList: [],
+        currentWeek: '',
+        total: 0,
         listLoading: true,
         listQuery: {
           page: 1,
           limit: 20,
-          importance: undefined,
-          title: undefined,
-          type: undefined,
-          sort: '+id'
+          wechartNo: '',
+          level: '',
+          nickName: '',
+          userName: '',
+          guid: ''
         },
+        proxyList: proxyList,
         temp: {
           id: undefined,
-          importance: 0,
-          remark: '',
-          timestamp: 0,
-          title: '',
-          type: '',
-          status: 'published'
+          wechartNo: '',
+          nickName: '',
+          userName: '',
+          guid: '',
+          level: '',
+          parentAgentId: '',
+          memo: ''
         },
-        importanceOptions: [1, 2, 3],
-        calendarTypeOptions,
-        sortOptions: [{ label: '按ID升序列', key: '+id' }, { label: '按ID降序', key: '-id' }],
-        statusOptions: ['published', 'draft', 'deleted'],
         dialogFormVisible: false,
         dialogStatus: '',
         textMap: {
-          update: '编辑',
-          create: '创建'
+          update: '编辑代理',
+          create: '创建代理'
         },
         dialogPvVisible: false,
-        pvData: [],
         showAuditor: false,
         tableKey: 0
       }
     },
     filters: {
-      statusFilter(status) {
-        const statusMap = {
-          published: 'success',
-          draft: 'gray',
-          deleted: 'danger'
-        }
-        return statusMap[status]
-      },
       typeFilter(type) {
-        return calendarTypeKeyValue[type]
+        return getAgentTypeName(type)
       }
     },
     created() {
       this.getList()
+      this.currentWeek = getCurrentWeek()
     },
     methods: {
       getList() {
         this.listLoading = true
         fetchAgentList(this.listQuery).then(response => {
           this.list = response.data.data
-          this.total = response.data.data.length
           this.listLoading = false
         })
+        fetchAgentCount(this.listQuery).then(response => {
+          this.total = response.data.data
+          this.listLoading = false
+        })
+      },
+      handleClipboard(text, event) {
+        clipboard(text, event)
+      },
+      handlerQueryPlayer() {
+
       },
       handleFilter() {
         this.listQuery.page = 1
@@ -242,6 +250,22 @@
       handleSizeChange(val) {
         this.listQuery.limit = val
         this.getList()
+      },
+      handlerRetsetPwd(agentId){
+        resetPwd(agentId).then((response) => {
+          const succ = response.data.data
+          if (succ) {
+            this.$message({
+              message: '重置成功',
+              type: 'success'
+            })
+          } else {
+            this.$message({
+              message: '重置失败',
+              type: 'warn'
+            })
+          }
+        })
       },
       handleCurrentChange(val) {
         this.listQuery.page = val
@@ -263,80 +287,114 @@
         })
         row.status = status
       },
-      handleCreate() {
-        this.resetTemp()
-        this.dialogStatus = 'create'
-        this.dialogFormVisible = true
-      },
-      handleUpdate(row) {
-        this.temp = Object.assign({}, row)
-        this.dialogStatus = 'update'
-        this.dialogFormVisible = true
-      },
-      handleDelete(row) {
-        this.$notify({
-          title: '成功',
-          message: '删除成功',
-          type: 'success',
-          duration: 2000
-        })
-        const index = this.list.indexOf(row)
-        this.list.splice(index, 1)
-      },
-      create() {
-        this.temp.id = parseInt(Math.random() * 100) + 1024
-        this.temp.timestamp = +new Date()
-        this.temp.author = '原创作者'
-        this.list.unshift(this.temp)
-        this.dialogFormVisible = false
-        this.$notify({
-          title: '成功',
-          message: '创建成功',
-          type: 'success',
-          duration: 2000
-        })
-      },
-      update() {
-        this.temp.timestamp = +this.temp.timestamp
-        for (const v of this.list) {
-          if (v.id === this.temp.id) {
-            const index = this.list.indexOf(v)
-            this.list.splice(index, 1, this.temp)
-            break
-          }
-        }
-        this.dialogFormVisible = false
-        this.$notify({
-          title: '成功',
-          message: '更新成功',
-          type: 'success',
-          duration: 2000
-        })
-      },
       resetTemp() {
         this.temp = {
           id: undefined,
-          importance: 0,
-          remark: '',
-          timestamp: 0,
-          title: '',
-          status: 'published',
-          type: ''
+          wechartNo: '',
+          nickName: '',
+          userName: '',
+          guid: '',
+          level: '',
+          parentAgentId: '',
+          memo: ''
         }
       },
-      handleFetchPv(pv) {
-        fetchPv(pv).then(response => {
-          this.pvData = response.data.pvData
-          this.dialogPvVisible = true
+      handleCreate() {
+        this.dialogStatus = 'create'
+        this.dialogFormVisible = true
+        this.resetTemp()
+        obtainChooseAreaAgentList('').then((response) => {
+          const responseList = response.data.data
+          this.chooseAreaAgentList = responseList
+        })
+        obtainChooseAgentList().then((response) => {
+          const responseList = response.data.data
+          this.chooseAgentList = responseList
         })
       },
-      handleDownload() {
-        require.ensure([], () => {
-          const { export_json_to_excel } = require('vendor/Export2Excel')
-          const tHeader = ['时间', '地区', '类型', '标题', '重要性']
-          const filterVal = ['timestamp', 'province', 'type', 'title', 'importance']
-          const data = this.formatJson(filterVal, this.list)
-          export_json_to_excel(tHeader, data, 'table数据')
+      handleUpdate(row) {
+        this.temp = {
+          id: row.agentId,
+          wechartNo: row.weChartNo,
+          nickName: row.nickName,
+          userName: row.name,
+          guid: row.gameId,
+          level: row.type,
+          parentAgentId: row.parentAgentId,
+          memo: row.memo
+        }
+        const level = row.type
+        let currentAgentId
+        if (level === 2) {
+          currentAgentId = row.agentId
+          if (row.parentAgentId === 0) {
+            this.temp.parentAgentId = ''
+          }
+        }
+
+        obtainChooseAreaAgentList(currentAgentId).then((response) => {
+          const responseList = response.data.data
+          this.chooseAreaAgentList = responseList
+        })
+        this.dialogStatus = 'update'
+        this.dialogFormVisible = true
+      },
+      create() {
+        createUpdateAgent(this.temp).then((response) => {
+          const responseData = response.data
+          if (responseData.data) {
+            this.$notify({
+              title: '成功',
+              message: '创建成功',
+              type: 'success',
+              duration: 2000
+            })
+            this.dialogFormVisible = false
+            this.getList()
+          } else {
+            this.$notify({
+              title: '创建失败',
+              message: response.data.msg,
+              type: 'error',
+              duration: 2000
+            })
+          }
+        }).catch(() => {
+          this.$notify({
+            title: '创建失败',
+            message: '请求失败,请重试',
+            type: 'error',
+            duration: 2000
+          })
+        })
+      },
+      update() {
+        createUpdateAgent(this.temp).then((response) => {
+          const responseData = response.data
+          if (responseData.data) {
+            this.$notify({
+              title: '成功',
+              message: '更新成功',
+              type: 'success',
+              duration: 2000
+            })
+            this.dialogFormVisible = false
+            this.getList()
+          } else {
+            this.$notify({
+              title: '更新失败',
+              message: response.data.msg,
+              type: 'error',
+              duration: 2000
+            })
+          }
+        }).catch(() => {
+          this.$notify({
+            title: '更新失败',
+            message: '请求失败,请重试',
+            type: 'error',
+            duration: 2000
+          })
         })
       },
       formatJson(filterVal, jsonData) {
