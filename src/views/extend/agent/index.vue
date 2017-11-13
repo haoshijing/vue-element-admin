@@ -70,6 +70,12 @@
         </template>
       </el-table-column>
 
+      <el-table-column align="center" label="下属人数" width="95">
+        <template scope="scope">
+          <span class="link-type" @click='handlerMemberList(scope.row.gameId)'>{{scope.row.memberCount}}</span>
+        </template>
+      </el-table-column>
+
       <el-table-column align="center" label="充值总额">
         <template scope="scope">
           <span>{{scope.row.agentTotalPickUp}}</span>
@@ -81,8 +87,6 @@
           <el-button  size="small" type="success" @click="handleUpdate(scope.row)">编辑
           </el-button>
           <el-button  size="small" type="success" @click="handlerRetsetPwd(scope.row.agentId)">重置密码
-          </el-button>
-          <el-button  size="small" type="success" @click="handlerQueryPlayer(scope.row)">查看玩家
           </el-button>
           <el-button v-if="scope.row.type === 2 " size="small" type="success" @click="handlerQueryPlayer(scope.row)">下属代理
           </el-button>
@@ -144,7 +148,15 @@
         <el-button v-else type="primary" @click="update">确 定</el-button>
       </div>
     </el-dialog>
-
+    <el-dialog title="会员列表" :visible.sync="dialogMemberVisible" size="small">
+      <el-table :data="memberList" border fit highlight-current-row style="width: 100%">
+        <el-table-column prop="playerGuid" label="Guid"> </el-table-column>
+        <el-table-column prop="playerPickUp" label="总充值"> </el-table-column>
+      </el-table>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="dialogPvVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -153,6 +165,7 @@
   import { fetchAgentCount } from '@/api/agent'
   import { createUpdateAgent } from '@/api/agent'
   import { obtainChooseAreaAgentList } from '@/api/agent'
+  import { obtainUnderPlayer } from '@/api/agent'
   import { obtainChooseAgentList } from '@/api/agent'
   import { resetPwd } from '@/api/agent'
 
@@ -179,6 +192,7 @@
     },
     data() {
       return {
+        dialogMemberVisible: false,
         list: [],
         chooseAgentList: [],
         chooseAreaAgentList: [],
@@ -194,6 +208,7 @@
           userName: '',
           guid: ''
         },
+        memberList: [],
         proxyList: proxyList,
         temp: {
           id: undefined,
@@ -240,8 +255,12 @@
       handleClipboard(text, event) {
         clipboard(text, event)
       },
-      handlerQueryPlayer() {
-
+      handlerMemberList(currentAgentGuid) {
+        this.dialogMemberVisible = true
+        obtainUnderPlayer(currentAgentGuid).then(response => {
+          this.memberList = response.data.data
+          this.dialogPvVisible = true
+        })
       },
       handleFilter() {
         this.listQuery.page = 1
@@ -251,7 +270,7 @@
         this.listQuery.limit = val
         this.getList()
       },
-      handlerRetsetPwd(agentId){
+      handlerRetsetPwd(agentId) {
         resetPwd(agentId).then((response) => {
           const succ = response.data.data
           if (succ) {

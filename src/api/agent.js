@@ -18,6 +18,9 @@ export function fetchAgentCount(query) {
     JSON.stringify(query)
   )
 }
+export function obtainUnderPlayer(agentGuid) {
+  return http.get('agent/obtainUnderPlayer?agentGuid='.concat(agentGuid))
+}
 
 export function createUpdateAgent(agent) {
   return http.post('agent/createUpdate'
