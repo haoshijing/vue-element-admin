@@ -35,7 +35,6 @@ import Hamburger from 'components/Hamburger'
 import Screenfull from 'components/Screenfull'
 import ErrorLog from 'components/ErrLog'
 import errLogStore from 'store/errLog'
-import http from '@/utils/fetch'
 
 export default {
   components: {
@@ -67,25 +66,7 @@ export default {
       this.$store.dispatch('ToggleSideBar')
     },
     handerUpdate() {
-      debugger
       this.dialogUnpdatePwdVisible = true
-    },
-    update() {
-      http.post('/user/updatepwd', JSON.stringify(this.temp)).then(response => {
-        const succ = response.data.data
-        if (succ) {
-          this.$message({
-            message: '重置密码成功,请退出用新密码登录',
-            type: 'success'
-          })
-          this.dialogUnpdatePwdVisible = false
-        } else {
-          this.$message({
-            message: response.data.msg,
-            type: 'warn'
-          })
-        }
-      })
     },
     logout() {
       this.$store.dispatch('LogOut').then(() => {
