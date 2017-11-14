@@ -11,7 +11,6 @@
       </el-select>
 
       <el-button class="filter-item" type="primary" v-waves icon="search" @click="handleFilter">搜索</el-button>
-
     </div>
 
     <el-table :key='tableKey' :data="list" v-loading="listLoading" element-loading-text="正在加载" border fit highlight-current-row style="width: 100%">
@@ -43,6 +42,11 @@
       <el-table-column  align="center" label="客户guid">
         <template scope="scope">
           <span @click='handleClipboard(scope.row.clientGuid,$event)'>{{scope.row.clientGuid}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column  align="center" label="下单时间">
+        <template scope="scope">
+          <span>{{scope.row.insertTime | insertTimeFilter}}</span>
         </template>
       </el-table-column>
 
@@ -108,6 +112,9 @@
           3: '服务处理异常'
         }
         return statusMap[status]
+      },
+      insertTimeFilter(insertTime) {
+        return parseTime(insertTime)
       },
       timeFilter(row) {
         if (row.orderStatus === 2) {

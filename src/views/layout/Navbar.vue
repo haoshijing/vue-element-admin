@@ -16,7 +16,11 @@
 						首页
 					</el-dropdown-item>
 				</router-link>
-        <el-dropdown-item divided><span @click="logout" style="display:block;">修改密码</span></el-dropdown-item>
+        <router-link class='inlineBlock' to="/extend/user/index">
+          <el-dropdown-item>
+            修改密码
+          </el-dropdown-item>
+        </router-link>
 				<el-dropdown-item divided><span @click="logout" style="display:block;">退出登录</span></el-dropdown-item>
 			</el-dropdown-menu>
 		</el-dropdown>
@@ -31,6 +35,7 @@ import Hamburger from 'components/Hamburger'
 import Screenfull from 'components/Screenfull'
 import ErrorLog from 'components/ErrLog'
 import errLogStore from 'store/errLog'
+import http from '@/utils/fetch'
 
 export default {
   components: {
@@ -42,7 +47,12 @@ export default {
   },
   data() {
     return {
-      log: errLogStore.state.errLog
+      dialogUnpdatePwdVisible: false,
+      log: errLogStore.state.errLog,
+      temp: {
+        oldpwd: '',
+        newpwd: ''
+      }
     }
   },
   computed: {
@@ -55,6 +65,27 @@ export default {
   methods: {
     toggleSideBar() {
       this.$store.dispatch('ToggleSideBar')
+    },
+    handerUpdate() {
+      debugger
+      this.dialogUnpdatePwdVisible = true
+    },
+    update() {
+      http.post('/user/updatepwd', JSON.stringify(this.temp)).then(response => {
+        const succ = response.data.data
+        if (succ) {
+          this.$message({
+            message: '重置密码成功,请退出用新密码登录',
+            type: 'success'
+          })
+          this.dialogUnpdatePwdVisible = false
+        } else {
+          this.$message({
+            message: response.data.msg,
+            type: 'warn'
+          })
+        }
+      })
     },
     logout() {
       this.$store.dispatch('LogOut').then(() => {

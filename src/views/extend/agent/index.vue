@@ -75,6 +75,11 @@
           <span class="link-type" @click='handlerMemberList(scope.row.gameId)'>{{scope.row.memberCount}}</span>
         </template>
       </el-table-column>
+      <el-table-column align="center" label="下属代理" width="95">
+        <template scope="scope">
+          <span v-if="scope.row.type === 2 " class="link-type" @click='handlerUnderPorxyList(scope.row.agentId)'>{{scope.row.underAgentCount}}</span>
+        </template>
+      </el-table-column>
 
       <el-table-column align="center" label="充值总额">
         <template scope="scope">
@@ -82,13 +87,11 @@
         </template>
       </el-table-column>
 
-      <el-table-column align="left" label="操作" width="350" >
+      <el-table-column align="left" label="操作" width="250" >
         <template scope="scope">
           <el-button  size="small" type="success" @click="handleUpdate(scope.row)">编辑
           </el-button>
-          <el-button  size="small" type="success" @click="handlerRetsetPwd(scope.row.agentId)">重置密码
-          </el-button>
-          <el-button v-if="scope.row.type === 2 " size="small" type="success" @click="handlerQueryPlayer(scope.row)">下属代理
+          <el-button  size="small" type="success" @click="handlerResetPwd(scope.row.agentId)">重置密码
           </el-button>
         </template>
       </el-table-column>
@@ -148,10 +151,25 @@
         <el-button v-else type="primary" @click="update">确 定</el-button>
       </div>
     </el-dialog>
-    <el-dialog title="会员列表" :visible.sync="dialogMemberVisible" size="small">
+    <el-dialog title="下属会员" :visible.sync="dialogMemberVisible" size="small">
       <el-table :data="memberList" border fit highlight-current-row style="width: 100%">
         <el-table-column prop="playerGuid" label="Guid"> </el-table-column>
         <el-table-column prop="playerPickUp" label="总充值"> </el-table-column>
+      </el-table>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="dialogPvVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
+    <el-dialog title="下属代理" :visible.sync="dialogPorxyVisible" size="small">
+      <el-table :data="proxyAgentList" border fit highlight-current-row style="width: 100%">
+        <el-table-column prop="agentId" label="代理id"> </el-table-column>
+        <el-table-column prop="agentGuid" label="代理guid"> </el-table-column>
+        <el-table-column prop="username" label="用户名"> </el-table-column>
+        <el-table-column prop="wechartNo" label="微信号"> </el-table-column>
+        <el-table-column prop="nickname" label="昵称"> </el-table-column>
+        <el-table-column prop="proxyPickTotal" label="代理总充值"> </el-table-column>
+        <el-table-column prop="proxyAgentTotal" label="下属总充值"> </el-table-column>
+
       </el-table>
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="dialogPvVisible = false">确 定</el-button>
@@ -166,6 +184,7 @@
   import { createUpdateAgent } from '@/api/agent'
   import { obtainChooseAreaAgentList } from '@/api/agent'
   import { obtainUnderPlayer } from '@/api/agent'
+  import { obtainUnderAgent } from '@/api/agent'
   import { obtainChooseAgentList } from '@/api/agent'
   import { resetPwd } from '@/api/agent'
 
@@ -193,6 +212,7 @@
     data() {
       return {
         dialogMemberVisible: false,
+        dialogPorxyVisible: false,
         list: [],
         chooseAgentList: [],
         chooseAreaAgentList: [],
@@ -209,6 +229,7 @@
           guid: ''
         },
         memberList: [],
+        proxyAgentList: [],
         proxyList: proxyList,
         temp: {
           id: undefined,
@@ -259,7 +280,12 @@
         this.dialogMemberVisible = true
         obtainUnderPlayer(currentAgentGuid).then(response => {
           this.memberList = response.data.data
-          this.dialogPvVisible = true
+        })
+      },
+      handlerUnderPorxyList(currentAgentId) {
+        this.dialogPorxyVisible = true
+        obtainUnderAgent(currentAgentId).then(response => {
+          this.proxyAgentList = response.data.data
         })
       },
       handleFilter() {
@@ -281,7 +307,7 @@
           } else {
             this.$message({
               message: '重置失败',
-              type: 'warn'
+              type: 'error'
             })
           }
         })
@@ -350,7 +376,6 @@
             this.temp.parentAgentId = ''
           }
         }
-
         obtainChooseAreaAgentList(currentAgentId).then((response) => {
           const responseList = response.data.data
           this.chooseAreaAgentList = responseList

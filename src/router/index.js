@@ -62,11 +62,20 @@ export const asyncRouterMap = [
     children: [{ path: 'index', component: _import('extend/pick/index'), name: '充值列表' }]
   },
   {
-    path: '/icon',
+    path: '/extend/log',
     component: Layout,
     icon: 'table',
     noDropdown: true,
-    children: [{ path: 'index', component: _import('svg-icons/index'), name: '操作日志' }]
+    children: [{ path: 'index', component: _import('extend/log/index'), name: '操作日志' }]
+  },
+  {
+    path: '/extend/user/',
+    component: Layout,
+    icon: 'table',
+    meta: { role: ['admin'] },
+    hidden: true,
+    noDropdown: true,
+    children: [{ path: 'index', component: _import('extend/user/index'), name: '修改密码' }]
   },
   /*
   {
