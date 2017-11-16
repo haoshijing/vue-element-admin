@@ -64,9 +64,14 @@
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="下属总充值">
+      <el-table-column align="center" label="下属总额">
         <template scope="scope">
           <span>{{scope.row.agentUnderTotalPickUp}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="下属代理总额">
+        <template scope="scope">
+          <span>{{scope.row.areaAgentUnderTotalPickUp}}</span>
         </template>
       </el-table-column>
 

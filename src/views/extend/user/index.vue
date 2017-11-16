@@ -45,7 +45,7 @@
               } else {
                 this.$message({
                   message: response.data.msg,
-                  type: 'warn'
+                  type: 'warning'
                 })
               }
             })

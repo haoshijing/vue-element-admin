@@ -27,9 +27,15 @@
         </template>
       </el-table-column>
 
-      <el-table-column  label="订单状态">
+      <el-table-column  label="充值状态">
         <template scope="scope">
           <span>{{scope.row.orderStatus | statusFilter}}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column  label="充值金额">
+        <template scope="scope">
+          <span>{{scope.row.price /100}}</span>
         </template>
       </el-table-column>
 
