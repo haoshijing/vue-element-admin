@@ -131,7 +131,7 @@
         </el-form-item>
 
         <el-form-item label="guid">
-          <el-select class="filter-item"  v-if = "!temp.id" v-model="temp.guid" placeholder="请选择">
+          <el-select class="filter-item" filterable  v-if = "!temp.id" v-model="temp.guid" placeholder="请选择">
             <el-option v-for="item in  chooseAgentList" :key="item" :label="item" :value="item">
             </el-option>
           </el-select>
@@ -139,7 +139,7 @@
         </el-form-item>
 
         <el-form-item label="上级代理" v-if="temp.level == 3">
-          <el-select class="filter-item" v-model="temp.parentAgentId" placeholder="请选择">
+          <el-select class="filter-item" filterable  v-model="temp.parentAgentId" placeholder="请选择">
             <el-option v-for="item in  chooseAreaAgentList" :key="item.agentId" :label="item.wechartNo" :value="item.agentId">
             </el-option>
           </el-select>
