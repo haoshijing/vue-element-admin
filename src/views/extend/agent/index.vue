@@ -21,20 +21,20 @@
 
     <div>第3周</div>
     <el-table :key='tableKey' :data="list" v-loading="listLoading" element-loading-text="正在加载" border fit highlight-current-row style="width: 100%">
-
+      <!--
       <el-table-column align="center" label="代理编号">
         <template scope="scope">
           <span>{{scope.row.agentId}}</span>
         </template>
       </el-table-column>
-
+      -->
       <el-table-column  align="center" label="guid">
         <template scope="scope">
           <span lick='handleClipboard(scope.row.gameId,$event)'>{{scope.row.gameId}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column  label="代理用户名">
+      <el-table-column  label="用户名">
         <template scope="scope">
           <span>{{scope.row.name}}</span>
         </template>
@@ -46,7 +46,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column  align="center" label="微信号">
+      <el-table-column  align="center" label="备注名">
         <template scope="scope">
           <span>{{scope.row.weChartNo}}</span>
         </template>
@@ -64,9 +64,9 @@
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="下属总额">
+      <el-table-column align="center" label="下属代理" width="95">
         <template scope="scope">
-          <span>{{scope.row.agentUnderTotalPickUp}}</span>
+          <span v-if="scope.row.type === 2 " class="link-type" @click='handlerUnderPorxyList(scope.row.agentId)'>{{scope.row.underAgentCount}}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" label="下属代理总额">
@@ -75,18 +75,19 @@
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="下属人数" width="95">
+      <el-table-column align="center" label="直属人数" width="95">
         <template scope="scope">
           <span class="link-type" @click='handlerMemberList(scope.row.gameId)'>{{scope.row.memberCount}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="下属代理" width="95">
+
+      <el-table-column align="center" label="直属总额">
         <template scope="scope">
-          <span v-if="scope.row.type === 2 " class="link-type" @click='handlerUnderPorxyList(scope.row.agentId)'>{{scope.row.underAgentCount}}</span>
+          <span>{{scope.row.agentUnderTotalPickUp}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="充值总额">
+      <el-table-column align="center" label="个人充值">
         <template scope="scope">
           <span>{{scope.row.agentTotalPickUp}}</span>
         </template>
@@ -119,12 +120,12 @@
           <el-input v-model="temp.nickName"></el-input>
         </el-form-item>
 
-        <el-form-item label="微信号">
+        <el-form-item label="备注号">
           <el-input v-model="temp.wechartNo" ></el-input>
         </el-form-item>
 
         <el-form-item label="代理级别">
-          <el-select class="filter-item" v-model="temp.level" placeholder="请选择">
+          <el-select disabled  = "temp.id" class="filter-item" v-model="temp.level" placeholder="请选择">
             <el-option v-for="item in  proxyList" :key="item.key" :label="item.label" :value="item.key">
             </el-option>
           </el-select>
@@ -139,8 +140,8 @@
         </el-form-item>
 
         <el-form-item label="上级代理" v-if="temp.level == 3">
-          <el-select class="filter-item" filterable  v-model="temp.parentAgentId" placeholder="请选择">
-            <el-option v-for="item in  chooseAreaAgentList" :key="item.agentId" :label="item.wechartNo" :value="item.agentId">
+          <el-select   class="filter-item" filterable  v-model="temp.parentAgentId" placeholder="请选择">
+            <el-option v-for="item in  chooseAreaAgentList" :key="item.agentId" :label="item.guid" :value="item.agentId">
             </el-option>
           </el-select>
         </el-form-item>
@@ -159,10 +160,11 @@
     <el-dialog title="下属会员" :visible.sync="dialogMemberVisible" size="small">
       <el-table :data="memberList" border fit highlight-current-row style="width: 100%">
         <el-table-column prop="playerGuid" label="Guid"> </el-table-column>
+        <el-table-column prop="name" label="用户名"> </el-table-column>
         <el-table-column prop="playerPickUp" label="总充值"> </el-table-column>
       </el-table>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogPvVisible = false">确 定</el-button>
+        <el-button type="primary" @click="dialogMemberVisible = false">确 定</el-button>
       </span>
     </el-dialog>
     <el-dialog title="下属代理" :visible.sync="dialogPorxyVisible" size="small">
@@ -177,7 +179,7 @@
 
       </el-table>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogPvVisible = false">确 定</el-button>
+        <el-button type="primary" @click="dialogPorxyVisible = false">确 定</el-button>
       </span>
     </el-dialog>
   </div>
