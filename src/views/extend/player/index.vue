@@ -67,7 +67,7 @@
     </div>
     <el-dialog title="充值列表" :visible.sync="dialogPickVisible" size="small">
       <el-table :data="pickList" border fit highlight-current-row style="width: 100%">
-        <el-table-column prop="guid" label="代理id"> </el-table-column>
+        <el-table-column prop="guid" label="玩家guid"> </el-table-column>
         <el-table-column prop="money" label="充值金额"> </el-table-column>
         <el-table-column prop="orderTime" label="下单时间"> </el-table-column>
         <el-table-column prop="orderStatusStr" label="支付状态"> </el-table-column>
