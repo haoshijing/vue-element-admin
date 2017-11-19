@@ -5,3 +5,9 @@ export function currentDayTotal() {
     'index/currentDayTotal'
   )
 }
+
+export function getCurrentAgentInfo() {
+  return http.get(
+    'index/currentAgent'
+  )
+}

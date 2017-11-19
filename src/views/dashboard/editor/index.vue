@@ -6,7 +6,7 @@
       </pan-thumb>
       <div class="info-container">
         <span class="display_name">欢迎你:{{name}}</span>
-        <span class = "">当前周下属总充值:20</span>
+        <span class = "">当前第{{agent.week}}周 下属总充值:{{ agent.totalPick }}</span>
         <span style='font-size:20px;padding-top:20px;display:inline-block;'></span>
       </div>
     </div>
@@ -19,13 +19,22 @@
 <script>
 import { mapGetters } from 'vuex'
 import PanThumb from '@/components/PanThumb'
+import { getCurrentAgentInfo } from '@/api/index'
 
 export default {
   name: 'dashboard-editor',
   components: { PanThumb },
   data() {
     return {
-      emptyGif: 'https://wpimg.wallstcn.com/0e03b7da-db9e-4819-ba10-9016ddfdaed3'
+      emptyGif: '16ddfdaed3',
+      agent: {}
+    }
+  },
+  methods: {
+    getCurrentAgentInfo() {
+      getCurrentAgentInfo().then(response => {
+        this.agent = response.data.data
+      })
     }
   },
   computed: {
