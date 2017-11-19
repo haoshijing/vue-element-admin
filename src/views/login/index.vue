@@ -62,7 +62,7 @@ export default {
     }
     return {
       loginForm: {
-        name: 'superadmin',
+        name: '',
         password: ''
       },
       loginTips: '',

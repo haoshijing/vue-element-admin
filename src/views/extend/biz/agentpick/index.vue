@@ -1,9 +1,6 @@
 <template>
   <div class="app-container calendar-list-container">
     <div class="filter-container">
-      <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" placeholder="guid" v-model="listQuery.guid">
-      </el-input>
-
       <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" placeholder="订单号" v-model="listQuery.orderId">
       </el-input>
       <el-select clearable class="filter-item" style="width: 130px" v-model="listQuery.orderStatus" placeholder="支付状态">
@@ -84,8 +81,8 @@
 </template>
 
 <script>
-  import { queryOrderList } from '@/api/order/orderapi'
-  import { queryOrderCount } from '@/api/order/orderapi'
+  import { queryOrderList } from '@/api/agentbiz/orderapi'
+  import { queryOrderCount } from '@/api/agentbiz/orderapi'
   import waves from '@/directive/waves/index.js' // 水波纹指令
   import { parseTime } from '@/utils'
   import clipboard from '@/utils/clipboard' // use clipboard directly
@@ -112,8 +109,7 @@
           orderId: '',
           startTimestamp: '',
           endTimestamp: '',
-          orderStatus: '',
-          guid: ''
+          orderStatus: ''
         },
         statusList: statusList,
         orderTime: ['', ''],
