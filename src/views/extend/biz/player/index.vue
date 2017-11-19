@@ -80,8 +80,8 @@
 </template>
 
 <script>
-  import { queryPlayerList } from '@/api/player/playerapi'
-  import { queryPlayerCount } from '@/api/player/playerapi'
+  import { queryAgentPlayerList } from '@/api/player/playerapi'
+  import { queryAgentPlayerCount } from '@/api/player/playerapi'
   import { queryPickList } from '@/api/player/playerapi'
   import waves from '@/directive/waves/index.js' // 水波纹指令
   import { parseTime } from '@/utils'
@@ -120,11 +120,11 @@
     methods: {
       getList() {
         this.listLoading = true
-        queryPlayerList(this.listQuery).then(response => {
+        queryAgentPlayerList(this.listQuery).then(response => {
           this.list = response.data.data
           this.listLoading = false
         })
-        queryPlayerCount(this.listQuery).then(response => {
+        queryAgentPlayerCount(this.listQuery).then(response => {
           this.total = response.data.data
           this.listLoading = false
         })
