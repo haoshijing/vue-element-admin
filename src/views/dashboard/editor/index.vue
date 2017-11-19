@@ -6,6 +6,7 @@
       </pan-thumb>
       <div class="info-container">
         <span class="display_name">欢迎你:{{name}}</span>
+        <span class = "">当前周下属总充值:20</span>
         <span style='font-size:20px;padding-top:20px;display:inline-block;'></span>
       </div>
     </div>
@@ -18,11 +19,10 @@
 <script>
 import { mapGetters } from 'vuex'
 import PanThumb from '@/components/PanThumb'
-import Github from '@/components/Github'
 
 export default {
   name: 'dashboard-editor',
-  components: { PanThumb, Github },
+  components: { PanThumb },
   data() {
     return {
       emptyGif: 'https://wpimg.wallstcn.com/0e03b7da-db9e-4819-ba10-9016ddfdaed3'

@@ -43,7 +43,7 @@
 					</div>
 				</el-card>
 			</el-col>
-
+    <!--
 			<el-col :span="8">
 				<pie-chart></pie-chart>
 			</el-col>
@@ -53,6 +53,7 @@
 			</el-col>
 		</el-row>
 
+
 		<el-row :gutter="20">
 			<el-col :span="15">
 				<line-chart></line-chart>
@@ -61,7 +62,7 @@
 				<todo-list></todo-list>
 			</el-col>
 		</el-row>
-
+    -->
 	</div>
 </template>
 
@@ -70,7 +71,6 @@ import { mapGetters } from 'vuex'
 import countTo from 'vue-count-to'
 import panThumb from '@/components/PanThumb'
 import todoList from '@/components/TodoList'
-import Github from '@/components/Github'
 import pieChart from './pieChart'
 import barChart from './barChart'
 import lineChart from './lineChart'
@@ -78,7 +78,7 @@ import { currentDayTotal } from '@/api/index'
 
 export default {
   name: 'dashboard-admin',
-  components: { countTo, panThumb, todoList, Github, pieChart, lineChart, barChart },
+  components: { countTo, panThumb, todoList, pieChart, lineChart, barChart },
   data() {
     return {
       statisticsData: {
