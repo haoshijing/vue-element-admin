@@ -36,6 +36,7 @@
         onSubmit() {
           http.post('/user/updatePwd', JSON.stringify(this.form))
             .then((response) => {
+              debugger
               const succ = response.data.data
               if (succ) {
                 this.$message({
