@@ -1,6 +1,5 @@
 <template>
 	<div class="dashboard-editor-container">
-		<github></github>
     <!--
 		<el-row class="btn-group">
 			<el-col :span="4" class='text-center'>
