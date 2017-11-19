@@ -30,6 +30,9 @@ export default {
       agent: {}
     }
   },
+  created() {
+    this.getCurrentAgentInfo()
+  },
   methods: {
     getCurrentAgentInfo() {
       getCurrentAgentInfo().then(response => {
