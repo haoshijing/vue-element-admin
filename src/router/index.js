@@ -106,13 +106,13 @@ export const asyncRouterMap = [
     children: [{ path: 'index', component: _import('extend/biz/agentpick/index'), name: '充值列表' }]
   },
   {
-    path: '/extend/biz/agentpick',
+    path: '/extend/biz/player',
     component: Layout,
     icon: 'table',
     meta: { role: ['agent'] },
     hidden: false,
     noDropdown: true,
-    children: [{ path: 'index', component: _import('extend/biz/agentpick/player'), name: '我的会员' }]
+    children: [{ path: 'index', component: _import('extend/biz/player/index'), name: '我的会员' }]
   },
   { path: '*', redirect: '/404', hidden: true }
 ]
