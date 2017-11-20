@@ -9,7 +9,7 @@
 
       <el-button class="filter-item" type="primary" v-waves icon="search" @click="handleFilter">搜索</el-button>
     </div>
-
+     <div style="margin: 3px"><span style="font-size: 20px">下属总充值:{{totalMoney}}</span> 元</div>
     <el-table :key='tableKey' :data="list" v-loading="listLoading" element-loading-text="正在加载" border fit highlight-current-row style="width: 100%">
 
       <el-table-column align="center" label="Guid">
@@ -96,6 +96,7 @@
       return {
         list: [],
         total: 0,
+        totalMoney: '',
         dialogPickVisible: false,
         listLoading: true,
         listQuery: {
@@ -121,7 +122,9 @@
       getList() {
         this.listLoading = true
         queryAgentPlayerList(this.listQuery).then(response => {
-          this.list = response.data.data
+          const data = response.data.data
+          this.list = data.playerResponseVoList
+          this.totalMoney = data.underMoney
           this.listLoading = false
         })
         queryAgentPlayerCount(this.listQuery).then(response => {

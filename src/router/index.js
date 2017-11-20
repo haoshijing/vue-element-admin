@@ -103,7 +103,7 @@ export const asyncRouterMap = [
     meta: { role: ['agent'] },
     hidden: false,
     noDropdown: true,
-    children: [{ path: 'index', component: _import('extend/biz/agentpick/index'), name: '充值列表' }]
+    children: [{ path: 'index', component: _import('extend/biz/agentpick/index'), name: '我的充值' }]
   },
   {
     path: '/extend/biz/player',
