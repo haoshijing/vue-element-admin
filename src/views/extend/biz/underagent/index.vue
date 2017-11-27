@@ -9,7 +9,7 @@
 
       <el-button class="filter-item" type="primary" v-waves icon="search" @click="handleFilter">搜索</el-button>
     </div>
-
+    <div style="margin: 3px"><span style="font-size: 20px">下属总充值:{{totalMoney}}</span> 元</div>
     <el-table :key='tableKey' :data="list" v-loading="listLoading" element-loading-text="正在加载" border fit highlight-current-row style="width: 100%">
 
       <el-table-column align="center" label="Guid">
@@ -23,31 +23,21 @@
           <span>{{scope.row.otherName}}</span>
         </template>
       </el-table-column>
-      <el-table-column  align="center" label="用户名">
-        <template scope="scope">
-          <span>{{scope.row.otherName}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column  align="center" label="客户名">
-        <template scope="scope">
-          <span>{{scope.row.otherName}}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column  label="总充值">
-        <template scope="scope">
-          <span class="link-type" @click='handlerPickList(scope.row.guid,scope.row.week)'>{{scope.row.pickTotal}}</span>
-        </template>
-      </el-table-column>
       <el-table-column  label="周数">
         <template scope="scope">
           <span>第{{scope.row.week}}周</span>
         </template>
       </el-table-column>
 
+      <el-table-column  label="总充值">
+        <template scope="scope">
+          <span>{{scope.row.pickTotal}}</span>
+        </template>
+      </el-table-column>
+
       <el-table-column  label="直属充值">
         <template scope="scope">
-          <span>{{scope.row.goldCount}}</span>
+          <span  class="link-type" @click='handlerPickList(scope.row.guid,scope.row.week)'>{{scope.row.agentTotal}}</span>
         </template>
       </el-table-column>
 
@@ -73,15 +63,15 @@
 </template>
 
 <script>
-  import { queryPlayerList } from '@/api/player/playerapi'
-  import { queryPlayerCount } from '@/api/player/playerapi'
-  import { queryPickList } from '@/api/player/playerapi'
+  import { queryUnderAgentList } from '@/api/agentbiz/underagent'
+  import { queryUnderAgentCount } from '@/api/agentbiz/underagent'
+  import { queryPickListForAgent } from '@/api/player/playerapi'
   import waves from '@/directive/waves/index.js' // 水波纹指令
   import { parseTime } from '@/utils'
   import clipboard from '@/utils/clipboard' // use clipboard directly
 
   export default {
-    name: 'playerList',
+    name: 'underAgentList',
     directives: {
       waves
     },
@@ -97,6 +87,7 @@
           guid: '',
           week: ''
         },
+        totalMoney: '',
         pickList: [],
         showAuditor: false,
         tableKey: 0
@@ -113,11 +104,13 @@
     methods: {
       getList() {
         this.listLoading = true
-        queryPlayerList(this.listQuery).then(response => {
-          this.list = response.data.data
+        queryUnderAgentList(this.listQuery).then(response => {
+          const data = response.data.data
+          this.list = data.underProxyVos
+          this.totalMoney = data.weekAgentPickTotal
           this.listLoading = false
         })
-        queryPlayerCount(this.listQuery).then(response => {
+        queryUnderAgentCount(this.listQuery).then(response => {
           this.total = response.data.data
           this.listLoading = false
         })
@@ -128,7 +121,7 @@
           guid: guid,
           week: week
         }
-        queryPickList(data).then(response => {
+        queryPickListForAgent(data).then(response => {
           this.pickList = response.data.data
         })
       },

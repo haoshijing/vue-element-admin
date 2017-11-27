@@ -22,3 +22,8 @@ export function queryPickList(pickRequest) {
   const url = '/player/queryPickList'
   return http.post(url, JSON.stringify(pickRequest))
 }
+
+export function queryPickListForAgent(pickRequest) {
+  const url = '/player/queryPickListForAgent'
+  return http.post(url, JSON.stringify(pickRequest))
+}
