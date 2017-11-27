@@ -88,13 +88,13 @@ export const asyncRouterMap = [
     children: [{ path: 'index', component: _import('extend/user/index'), name: '修改密码' }]
   },
   {
-    path: '/extend/biz/agent',
+    path: '/extend/biz/underagent',
     component: Layout,
     icon: 'table',
     meta: { role: ['areaagent'] },
     hidden: false,
     noDropdown: true,
-    children: [{ path: 'index', component: _import('extend/user/index'), name: '下级代理' }]
+    children: [{ path: 'index', component: _import('extend/biz/underagent/index'), name: '下级代理' }]
   },
   {
     path: '/extend/biz/agentpick',
