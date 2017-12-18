@@ -33,7 +33,7 @@
 
       <el-table-column  label="总充值">
         <template scope="scope">
-          <span>{{scope.row.pickTotal}}</span>
+          <span style='color:#cccccc;'>{{scope.row.pickTotal}}</span>
         </template>
       </el-table-column>
 
