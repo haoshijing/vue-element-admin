@@ -67,7 +67,7 @@
 
       <el-table-column align="center" label="下属代理" width="95">
         <template scope="scope">
-          <span v-if="scope.row.type === 2 " class="link-type" @click='handlerUnderProxyList(scope.row.agentId)'>{{scope.row.underAgentCount}}</span>
+          <span v-if="scope.row.type === 2 " class="link-type" @click='handlerUnderProxyList(scope.row.agentId,scope.row.week)'>{{scope.row.underAgentCount}}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" label="下属代理总额">
@@ -298,9 +298,9 @@
           this.memberList = response.data.data
         })
       },
-      handlerUnderProxyList(currentAgentId) {
+      handlerUnderProxyList(currentAgentId, week) {
         this.dialogPorxyVisible = true
-        obtainUnderAgent(currentAgentId).then(response => {
+        obtainUnderAgent(currentAgentId, week).then(response => {
           this.proxyAgentList = response.data.data
         })
       },

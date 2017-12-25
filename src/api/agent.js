@@ -21,8 +21,8 @@ export function fetchAgentCount(query) {
 export function obtainUnderPlayer(agentGuid) {
   return http.get('agent/obtainUnderPlayer?agentGuid='.concat(agentGuid))
 }
-export function obtainUnderAgent(agentId) {
-  return http.get('agent/obtainUnderAgent?agentId='.concat(agentId))
+export function obtainUnderAgent(agentId, week) {
+  return http.get('agent/obtainUnderAgent?agentId='.concat(agentId).concat('& week=').concat(week))
 }
 
 export function createUpdateAgent(agent) {
