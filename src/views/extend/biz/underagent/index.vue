@@ -31,10 +31,10 @@
         </template>
       </el-table-column>
 
-      <el-table-column  label="总充值" >
+      <el-table-column  label="总充值">
         <template scope="scope">
-          <span v-if="scope.row.isNotCal == 1">{{scope.row.pickTotal}}</span>
-          <span v-if="scope.row.isNotCal == 2" style="color: #3c763d">{{scope.row.pickTotal}}</span>
+          <span v-if ="scope.row.isNotCal == 2" style='color:#cccccc;'>{{scope.row.pickTotal}}</span>
+          <span v-if ="scope.row.isNotCal == 1">{{scope.row.pickTotal}}</span>
         </template>
       </el-table-column>
 
