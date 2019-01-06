@@ -51,33 +51,51 @@ export const asyncRouterMap = [
     icon: 'table',
     meta: { role: ['admin'] },
     noDropdown: true,
-    children: [{ path: 'index', component: _import('extend/agent/index'), name: '代理列表', meta: { role: ['admin'] }}]
+    children: [
+      {
+        path: 'index', component: _import('extend/agent/index'), name: 'Agent', meta: { role: ['admin'] }
+      }
+    ]
   },
   {
     path: '/extend/pick',
     component: Layout,
     icon: 'table',
     redirect: '/extend/pick',
-    meta: { role: ['admin'] },
-    noDropdown: true,
-    children: [{ path: 'index', component: _import('extend/pick/index'), name: '充值列表' }]
+    name: 'Room',
+    meta: {
+      title: 'Room',
+      icon: 'component',
+      role: ['admin']
+    },
+    alwaysShow: true,
+    children: [{ path: 'index', component: _import('extend/pick/index'), name: 'Room Overall' },
+      { path: 'index', component: _import('extend/pick/index'), name: 'Room List' }]
   },
   {
     path: '/extend/player',
     component: Layout,
     icon: 'table',
+    name: 'Member',
     redirect: '/extend/player',
     meta: { role: ['admin'] },
-    noDropdown: true,
-    children: [{ path: 'index', component: _import('extend/player/index'), name: '玩家列表' }]
+    alwaysShow: true,
+    children: [
+      { path: 'index', component: _import('extend/player/index'), name: 'Member Setup' },
+      { path: 'index', component: _import('extend/player/index'), name: 'Member List' }
+    ]
   },
   {
     path: '/extend/log',
     component: Layout,
+    name: 'Maintenance',
     icon: 'table',
     meta: { role: ['admin'] },
-    noDropdown: true,
-    children: [{ path: 'index', component: _import('extend/log/index'), name: '操作日志' }]
+    alwaysShow: true,
+    children: [
+      { path: 'index', component: _import('extend/log/index'), name: 'Administrator List' },
+      { path: 'index', component: _import('extend/log/index'), name: 'Money Change Record' }
+    ]
   },
   {
     path: '/extend/user/',
@@ -86,33 +104,6 @@ export const asyncRouterMap = [
     hidden: true,
     noDropdown: true,
     children: [{ path: 'index', component: _import('extend/user/index'), name: '修改密码' }]
-  },
-  {
-    path: '/extend/biz/underagent',
-    component: Layout,
-    icon: 'table',
-    meta: { role: ['areaagent'] },
-    hidden: false,
-    noDropdown: true,
-    children: [{ path: 'index', component: _import('extend/biz/underagent/index'), name: '下级代理' }]
-  },
-  {
-    path: '/extend/biz/agentpick',
-    component: Layout,
-    icon: 'table',
-    meta: { role: ['agent'] },
-    hidden: false,
-    noDropdown: true,
-    children: [{ path: 'index', component: _import('extend/biz/agentpick/index'), name: '我的充值' }]
-  },
-  {
-    path: '/extend/biz/player',
-    component: Layout,
-    icon: 'table',
-    meta: { role: ['agent'] },
-    hidden: false,
-    noDropdown: true,
-    children: [{ path: 'index', component: _import('extend/biz/player/index'), name: '我的会员' }]
   },
   { path: '*', redirect: '/404', hidden: true }
 ]

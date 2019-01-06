@@ -4,22 +4,9 @@
 		<el-row>
 			<el-col :span="6">
 				<el-card class="box-card">
-					<div slot="header" class="box-card-header">
-						<pan-thumb class="panThumb" :image="avatar"> 你的权限:
-							<span class="pan-info-roles" :key='item' v-for="item in roles">{{item}}</span>
-						</pan-thumb>
-					</div>
-					<span class="display_name">{{name}}</span>
-					<div class="info-item">
-						<count-to class="info-item-num" :startVal='0' :endVal='statisticsData.dayPickTotal' :duration='3400'></count-to>
-						<span class="info-item-text">今日总充值额</span>
-						<icon-svg icon-class="trendChart1" class="dashboard-editor-icon"></icon-svg>
-					</div>
-					<div class="info-item">
-						<count-to class="info-item-num" :startVal='0' :endVal='statisticsData.daySuccessTotal' :duration='3600'></count-to>
-						<span class="info-item-text">今日充值成功金额</span>
-						<icon-svg icon-class="trendChart2" class="dashboard-editor-icon"></icon-svg>
-					</div>
+
+					<span class="display_name">欢迎您:{{name}}管理员</span>
+
 				</el-card>
 			</el-col>
     <!--
@@ -47,17 +34,10 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import countTo from 'vue-count-to'
-import panThumb from '@/components/PanThumb'
-import todoList from '@/components/TodoList'
-import pieChart from './pieChart'
-import barChart from './barChart'
-import lineChart from './lineChart'
-import { currentDayTotal } from '@/api/index'
 
 export default {
   name: 'dashboard-admin',
-  components: { countTo, panThumb, todoList, pieChart, lineChart, barChart },
+  components: { },
   data() {
     return {
       statisticsData: {
@@ -71,9 +51,7 @@ export default {
   },
   methods: {
     getList() {
-      currentDayTotal().then(response => {
-        this.statisticsData = response.data.data
-      })
+
     }
   },
   computed: {
