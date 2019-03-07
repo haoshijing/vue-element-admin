@@ -6,7 +6,7 @@ export function loginByUsername(name, password) {
     password
   }
   return fetch({
-    url: '/login',
+    url: '/user/login',
     method: 'post',
     data
   })
@@ -14,14 +14,14 @@ export function loginByUsername(name, password) {
 
 export function logout() {
   return fetch({
-    url: '/logout',
+    url: '/user/logout',
     method: 'post'
   })
 }
 
 export function getUserInfo() {
   return fetch({
-    url: '/info',
+    url: '/user/info',
     method: 'get'
   })
 }

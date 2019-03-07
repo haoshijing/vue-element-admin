@@ -1,8 +1,8 @@
 import http from '@/utils/fetch'
 
-export function queryAgentList(query) {
+export function queryAgentData(query) {
   return http.post(
-    'agent/queryList',
+    'agent/queryAgentData',
     JSON.stringify(query)
   )
 }
