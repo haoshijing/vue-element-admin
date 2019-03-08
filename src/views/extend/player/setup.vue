@@ -77,10 +77,8 @@
         </el-form-item>
 
         <el-form-item label="IsAgent">
-          <el-radio-group v-model="temp.ShowIsAgent">
-            <el-radio :label="Yes">Yes</el-radio>
-            <el-radio :label="No">No</el-radio>
-          </el-radio-group>
+          <el-radio v-model="temp.showIsAgent" label="Yes">Yes</el-radio>
+          <el-radio v-model="temp.showIsAgent" label="No">No</el-radio>
         </el-form-item>
 
         <el-form-item label="BindGuid">
@@ -100,7 +98,7 @@
 
 <script>
   import waves from '@/directive/waves/index.js' // 水波纹指令
-  import { queryMemberSetUp } from '@/api/playerapi'
+  import { queryMemberSetUp, updatePlayer } from '@/api/playerapi'
 
   export default {
     name: 'memberSetUp',
@@ -122,7 +120,7 @@
           Password: '',
           BindGuid: 0,
           Money: '',
-          ShowIsAgent: ''
+          showIsAgent: ''
         }
       }
     },
@@ -153,6 +151,29 @@
         this.getList()
       },
       updatePlayer() {
+        const data = {
+          guid: this.temp.Guid,
+          password: this.temp.Password,
+          money: this.temp.Money,
+          showIsAgent: this.temp.showIsAgent,
+          bindGuid: this.temp.BindGuid
+        }
+        updatePlayer(data).then(resp => {
+          const updateRet = resp.data.data
+          if (updateRet) {
+            this.dialogFormVisible = true
+            this.getList()
+            this.$message({
+              message: 'success',
+              type: 'success'
+            })
+          } else {
+            this.$message({
+              message: 'fail',
+              type: 'error'
+            })
+          }
+        })
       }
     }
   }
