@@ -26,9 +26,8 @@
           <span>{{scope.row.createTime}}</span>
         </template>
       </el-table-column>
-
-
     </el-table>
+
 
   </div>
 </template>
@@ -47,6 +46,7 @@
         list: [],
         total: 0,
         listLoading: false,
+        dialogFormVisible: false,
         listQuery: {
           page: 1,
           limit: 10
@@ -63,8 +63,8 @@
       },
       getList() {
         queryAgentData(this.listQuery).then(resp => {
-          this.list = resp.data.datas
-          this.total = resp.data.totalCount
+          this.list = resp.data.data.datas
+          this.total = resp.data.data.totalCount
         })
       },
       handleSizeChange(val) {

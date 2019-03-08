@@ -81,20 +81,8 @@ export const asyncRouterMap = [
     meta: { role: ['admin'] },
     alwaysShow: true,
     children: [
-      { path: 'index', component: _import('extend/player/index'), name: 'Member Setup' },
+      { path: 'setup', component: _import('extend/player/setup'), name: 'Member Setup' },
       { path: 'index', component: _import('extend/player/index'), name: 'Member List' }
-    ]
-  },
-  {
-    path: '/extend/log',
-    component: Layout,
-    name: 'Maintenance',
-    icon: 'table',
-    meta: { role: ['admin'] },
-    alwaysShow: true,
-    children: [
-      { path: 'index', component: _import('extend/log/index'), name: 'Administrator List' },
-      { path: 'index', component: _import('extend/log/index'), name: 'Money Change Record' }
     ]
   },
   {
@@ -103,7 +91,7 @@ export const asyncRouterMap = [
     icon: 'table',
     hidden: true,
     noDropdown: true,
-    children: [{ path: 'index', component: _import('extend/user/index'), name: '修改密码' }]
+    children: [{ path: 'index', component: _import('extend/user/index'), name: 'updatePwd' }]
   },
   { path: '*', redirect: '/404', hidden: true }
 ]

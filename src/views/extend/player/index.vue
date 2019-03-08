@@ -3,46 +3,50 @@
     <el-table :data="list" v-loading="listLoading" element-loading-text="loadding" border fit highlight-current-row
               style="width: 100%">
 
-      <el-table-column align="center" label="Account">
+      <el-table-column align="center" label="Guid">
         <template scope="scope">
-          <span>{{scope.row.guid}}</span>
+          <span>{{scope.row.Guid}}</span>
         </template>
       </el-table-column>
 
       <el-table-column label="Account">
         <template scope="scope">
-          <span>{{scope.row.account}}</span>
+          <span>{{scope.row.Account}}</span>
         </template>
       </el-table-column>
 
 
       <el-table-column label="Nickname">
         <template scope="scope">
-          <span>{{scope.row.nick}}</span>
+          <span>{{scope.row.Nick}}</span>
         </template>
       </el-table-column>
 
       <el-table-column align="center" label="Balance">
         <template scope="scope">
-          <span>{{scope.row.money}}</span>
+          <span>{{scope.row.Money}}</span>
         </template>
       </el-table-column>
 
       <el-table-column align="center" label="RegisterTime">
         <template scope="scope">
-          <span>{{scope.row.createTime}}</span>
+          <span>{{scope.row.CreateTime}}</span>
         </template>
       </el-table-column>
 
 
     </el-table>
-
+    <div v-show="!listLoading" class="pagination-container">
+      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="listQuery.page"
+                     :page-sizes="[10,20,30, 50]" :page-size="listQuery.limit" layout="total, sizes, prev, pager, next, jumper" :total="total">
+      </el-pagination>
+    </div>
   </div>
 </template>
 
 <script>
   import waves from '@/directive/waves/index.js' // 水波纹指令
-  import { queryAgentData } from '@/api/agent'
+  import { queryPlayerData } from '@/api/playerapi'
 
   export default {
     name: 'agentList',
@@ -69,9 +73,9 @@
 
       },
       getList() {
-        queryAgentData(this.listQuery).then(resp => {
-          this.list = resp.data.datas
-          this.total = resp.data.totalCount
+        queryPlayerData(this.listQuery).then(resp => {
+          this.list = resp.data.data.datas
+          this.total = resp.data.data.totalCount
         })
       },
       handleSizeChange(val) {
