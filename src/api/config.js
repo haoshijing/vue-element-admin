@@ -7,6 +7,6 @@ export function queryConfigData() {
   })
 }
 export function updateConfigData(updateData) {
-  const url = '/config/updateData'
+  const url = '/config/setConfig'
   return http.post(url, JSON.stringify(updateData))
 }

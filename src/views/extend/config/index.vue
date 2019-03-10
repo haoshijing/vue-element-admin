@@ -34,26 +34,38 @@
           <span>{{scope.row.RegisterCount}}</span>
         </template>
       </el-table-column>
+
+      <el-table-column label="operator">
+        <template scope="scope">
+          <el-button size="small" type="success" @click="handleUpdate(scope.row)">edit
+          </el-button>
+        </template>
+      </el-table-column>
     </el-table>
-    <el-dialog>
-         <el-form-item label="Notice">
-          <el-input v-model="temp.notice" ></el-input>
+    <el-dialog :visible.sync="dialogFormVisible">
+      <el-form class="small-space" :model="temp" label-position="left" label-width="140px"
+               style='width: 400px; margin-left:50px;'>
+        <el-form-item label="Version">
+          <el-input v-model="temp.version" ></el-input>
+        </el-form-item>
+        <el-form-item label="Notice">
+          <el-input v-model="temp.notice"></el-input>
         </el-form-item>
 
         <el-form-item label="ScrollMessage">
-        <el-input v-model="temp.scrollMessage" ></el-input>
-      </el-form-item>
+          <el-input v-model="temp.scrollMessage"></el-input>
+        </el-form-item>
 
         <el-form-item label="AndroidUpdateUrl">
-          <el-input v-model="temp.androidUpdateUrl" ></el-input>
+          <el-input v-model="temp.androidUpdateUrl"></el-input>
         </el-form-item>
 
         <el-form-item label="IOSUpdateUrl">
-          <el-input v-model="temp.iOSUpdateUrl" ></el-input>
+          <el-input v-model="temp.iOSUpdateUrl"></el-input>
         </el-form-item>
 
         <el-form-item label="SoundUpLoadUrl">
-          <el-input v-model="temp.soundUpLoadUrl" ></el-input>
+          <el-input v-model="temp.soundUpLoadUrl"></el-input>
         </el-form-item>
 
 
@@ -62,22 +74,23 @@
         </el-form-item>
 
         <el-form-item label="WXShareUrl">
-          <el-input v-model="temp.wXShareUrl" ></el-input>
+          <el-input v-model="temp.wXShareUrl"></el-input>
         </el-form-item>
 
         <el-form-item label="ResourceDownLoadUrl">
-          <el-input v-model="temp.resourceDownLoadUrl" ></el-input>
+          <el-input v-model="temp.resourceDownLoadUrl"></el-input>
         </el-form-item>
 
-        <el-form-item label="ResourceDownLoadUrl">
-          <el-input v-model="temp.resourceDownLoadUrl" ></el-input>
+        <el-form-item label="CreateDefaultMoney">
+          <el-input v-model="temp.createDefaultMoney"></el-input>
         </el-form-item>
 
-
+      </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">Cancel</el-button>
         <el-button type="primary" @click="updateConfig">Ok</el-button>
       </div>
+
     </el-dialog>
 
   </div>
@@ -85,10 +98,9 @@
 
 <script>
   import waves from '@/directive/waves/index.js' // 水波纹指令
-  import { queryMemberSetUp, updatePlayer } from '@/api/playerapi'
+  import { queryConfigData, updateConfigData } from '@/api/config'
 
   export default {
-    components: {ElDialog},
     name: 'gameConfig',
     directives: {
       waves
@@ -99,10 +111,8 @@
         total: 0,
         listLoading: false,
         dialogFormVisible: false,
-        listQuery: {
-        },
-        temp: {
-        }
+        listQuery: {},
+        temp: {}
       }
     },
     filters: {},
@@ -114,7 +124,7 @@
         this.getList()
       },
       getList() {
-        queryMemberSetUp(this.listQuery).then(resp => {
+        queryConfigData().then(resp => {
           this.list = resp.data.data
         })
       },
@@ -125,12 +135,13 @@
           'version': row.Version,
           'updateMessage': row.UpdateMessage,
           'scrollMessage': row.ScrollMessage,
-          'scrollMessage': row.ScrollMessage,
-          'scrollMessage': row.ScrollMessage,
-          'scrollMessage': row.ScrollMessage,
-          'scrollMessage': row.ScrollMessage,
-          'scrollMessage': row.ScrollMessage,
-          'scrollMessage': row.ScrollMessage
+          'androidUpdateUrl': row.AndroidUpdateUrl,
+          'iOSUpdateUrl': row.OSUpdateUrl,
+          'soundUpLoadUrl': row.SoundUpLoadUrl,
+          'soundDownLoadUrl': row.SoundDownLoadUrl,
+          'wXShareUrl': row.WXShareUrl,
+          'resourceDownLoadUrl': row.ResourceDownLoadUrl,
+          'createDefaultMoney': row.CreateDefaultMoney
         }
       },
       handleSizeChange(val) {
@@ -141,15 +152,8 @@
         this.listQuery.page = val
         this.getList()
       },
-      updatePlayer() {
-        const data = {
-          guid: this.temp.Guid,
-          password: this.temp.Password,
-          money: this.temp.Money,
-          showIsAgent: this.temp.showIsAgent,
-          bindGuid: this.temp.BindGuid
-        }
-        updatePlayer(data).then(resp => {
+      updateConfig() {
+        updateConfigData(this.temp).then(resp => {
           const updateRet = resp.data.data
           if (updateRet) {
             this.dialogFormVisible = false

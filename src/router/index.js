@@ -46,6 +46,21 @@ export default new Router({
 
 export const asyncRouterMap = [
   {
+    path: '/extend/config',
+    component: Layout,
+    icon: 'table',
+    redirect: '/extend/config',
+    name: 'Config',
+    meta: {
+      title: 'Game',
+      icon: 'component',
+      role: ['admin']
+    },
+    alwaysShow: true,
+    children: [{ path: 'index', component: _import('extend/config/index'), name: 'Game Setup' }
+    ]
+  },
+  {
     path: '/extend/agent',
     component: Layout,
     icon: 'table',
