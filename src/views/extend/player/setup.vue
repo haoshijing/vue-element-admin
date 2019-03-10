@@ -25,6 +25,13 @@
         </template>
       </el-table-column>
 
+      <el-table-column label="Money">
+        <template scope="scope">
+          <span>{{scope.row.Money}}</span>
+        </template>
+      </el-table-column>
+
+
       <el-table-column label="IsAgent">
         <template scope="scope">
           <span>{{scope.row.showIsAgent}}</span>
@@ -53,7 +60,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column  label="operatr">
+      <el-table-column  label="operator">
         <template scope="scope">
           <el-button  size="small" type="success" @click="handleUpdate(scope.row)">edit
           </el-button>
@@ -161,7 +168,7 @@
         updatePlayer(data).then(resp => {
           const updateRet = resp.data.data
           if (updateRet) {
-            this.dialogFormVisible = true
+            this.dialogFormVisible = false
             this.getList()
             this.$message({
               message: 'success',

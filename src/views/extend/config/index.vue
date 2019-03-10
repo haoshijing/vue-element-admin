@@ -1,88 +1,169 @@
 <template>
-  <div>
-    <el-form label-width="180px" style="width: 400px; margin-left:50px;">
-      <el-form-item label="Version:">
-        <el-input  v-model="configVo.version" />
-      </el-form-item>
-      <el-form-item label="Address:">
-        <el-input v-model="configVo.address"/>
+  <div class="app-container calendar-list-container">
+
+    <el-table :data="list" v-loading="listLoading" element-loading-text="loadding" border fit highlight-current-row
+              style="width: 100%">
+
+      <el-table-column align="center" label="Address">
+        <template scope="scope">
+          <span>{{scope.row.Address}}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column label="Version ">
+        <template scope="scope">
+          <span>{{scope.row.Version }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" label="ScrollMessage">
+        <template scope="scope">
+          <span>{{scope.row.ScrollMessage}}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column label="OnlineCount">
+        <template scope="scope">
+          <span>{{scope.row.OnlineCount}}</span>
+        </template>
+      </el-table-column>
+
+
+      <el-table-column label="RegisterCount">
+        <template scope="scope">
+          <span>{{scope.row.RegisterCount}}</span>
+        </template>
+      </el-table-column>
+    </el-table>
+    <el-dialog>
+         <el-form-item label="Notice">
+          <el-input v-model="temp.notice" ></el-input>
+        </el-form-item>
+
+        <el-form-item label="ScrollMessage">
+        <el-input v-model="temp.scrollMessage" ></el-input>
       </el-form-item>
 
-      <el-form-item label="UpdateMessage:">
-        <el-input  v-model="configVo.updateMessage"/>
-      </el-form-item>
-      <el-form-item label="Notice:">
-        <el-input  v-model="configVo.notice"/>
-      </el-form-item>
-      <el-form-item label="ScrollMessage:">
-        <el-input  v-model="configVo.scrollMessage"/>
-      </el-form-item>
-      <el-form-item label="AndroidUpdateUrl:">
-        <el-input  v-model="configVo.androidUpdateUrl" />
-      </el-form-item>
-      <el-form-item label="IOSUpdateUrl:">
-        <el-input  v-model="configVo.iOSUpdateUrl"/>
-      </el-form-item>
-      <el-form-item label="SoundUpLoadUrl:">
-        <el-input v-model="configVo.soundUpLoadUrl"/>
-      </el-form-item>
+        <el-form-item label="AndroidUpdateUrl">
+          <el-input v-model="temp.androidUpdateUrl" ></el-input>
+        </el-form-item>
 
-      <el-form-item label="WXShareUrl:">
-        <el-input v-model="configVo.wXShareUrl"/>
-      </el-form-item>
+        <el-form-item label="IOSUpdateUrl">
+          <el-input v-model="temp.iOSUpdateUrl" ></el-input>
+        </el-form-item>
 
-      <el-form-item label="ResourceDownLoadUrl:">
-        <el-input v-model="configVo.resourceDownLoadUrl"/>
-      </el-form-item>
+        <el-form-item label="SoundUpLoadUrl">
+          <el-input v-model="temp.soundUpLoadUrl" ></el-input>
+        </el-form-item>
 
-      <el-form-item label="CreateDefaultMoney:">
-        <el-input v-model="configVo.createDefaultMoney"/>
-      </el-form-item>
 
-      <el-form-item label="OnlineCount:">
-        <span>{{configVo.onlineCount}}</span>
-      </el-form-item>
+        <el-form-item label="SoundDownLoadUrl">
+          <el-input v-model="temp.soundDownLoadUrl"></el-input>
+        </el-form-item>
 
-      <el-form-item label="RegisterCount:">
-        <span>{{configVo.registerCount}}</span>
-      </el-form-item>
+        <el-form-item label="WXShareUrl">
+          <el-input v-model="temp.wXShareUrl" ></el-input>
+        </el-form-item>
 
-    </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" @click="updateConfigData">save</el-button>
-    </div>
+        <el-form-item label="ResourceDownLoadUrl">
+          <el-input v-model="temp.resourceDownLoadUrl" ></el-input>
+        </el-form-item>
+
+        <el-form-item label="ResourceDownLoadUrl">
+          <el-input v-model="temp.resourceDownLoadUrl" ></el-input>
+        </el-form-item>
+
+
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">Cancel</el-button>
+        <el-button type="primary" @click="updateConfig">Ok</el-button>
+      </div>
+    </el-dialog>
+
   </div>
 </template>
+
 <script>
-  import { queryConfigData, updateConfigData } from '@/api/config'
+  import waves from '@/directive/waves/index.js' // 水波纹指令
+  import { queryMemberSetUp, updatePlayer } from '@/api/playerapi'
+
   export default {
-    name: 'configForm',
-    directives: {},
+    components: {ElDialog},
+    name: 'gameConfig',
+    directives: {
+      waves
+    },
     data() {
       return {
-        configVo: {}
+        list: [],
+        total: 0,
+        listLoading: false,
+        dialogFormVisible: false,
+        listQuery: {
+        },
+        temp: {
+        }
       }
     },
     filters: {},
     created() {
-      this.obtainData()
+      this.getList()
     },
     methods: {
-      obtainData() {
-        queryConfigData().then(resp => {
-          const data = resp.data.data
-          this.configVo = data
+      handleFilter() {
+        this.getList()
+      },
+      getList() {
+        queryMemberSetUp(this.listQuery).then(resp => {
+          this.list = resp.data.data
         })
       },
-
-      updateConfigData() {
-        updateConfigData(this.configVo).then(resp => {
-          this.$notify({
-            title: '成功',
-            message: '编辑成功',
-            type: 'success',
-            duration: 2000
-          })
+      handleUpdate(row) {
+        this.dialogFormVisible = true
+        this.temp = {
+          'address': row.Address,
+          'version': row.Version,
+          'updateMessage': row.UpdateMessage,
+          'scrollMessage': row.ScrollMessage,
+          'scrollMessage': row.ScrollMessage,
+          'scrollMessage': row.ScrollMessage,
+          'scrollMessage': row.ScrollMessage,
+          'scrollMessage': row.ScrollMessage,
+          'scrollMessage': row.ScrollMessage,
+          'scrollMessage': row.ScrollMessage
+        }
+      },
+      handleSizeChange(val) {
+        this.listQuery.limit = val
+        this.getList()
+      },
+      handleCurrentChange(val) {
+        this.listQuery.page = val
+        this.getList()
+      },
+      updatePlayer() {
+        const data = {
+          guid: this.temp.Guid,
+          password: this.temp.Password,
+          money: this.temp.Money,
+          showIsAgent: this.temp.showIsAgent,
+          bindGuid: this.temp.BindGuid
+        }
+        updatePlayer(data).then(resp => {
+          const updateRet = resp.data.data
+          if (updateRet) {
+            this.dialogFormVisible = false
+            this.getList()
+            this.$message({
+              message: 'success',
+              type: 'success'
+            })
+          } else {
+            this.$message({
+              message: 'fail',
+              type: 'error'
+            })
+          }
         })
       }
     }

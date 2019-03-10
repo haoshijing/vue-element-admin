@@ -3,36 +3,38 @@
     <el-table :data="list" v-loading="listLoading" element-loading-text="loadding" border fit highlight-current-row
               style="width: 100%">
 
-      <el-table-column align="center" label="Id">
+      <el-table-column align="center" label="RoomCode">
         <template scope="scope">
-          <span>{{scope.row.Guid}}</span>
+          <span>{{scope.row.RoomCode}}</span>
         </template>
       </el-table-column>
 
 
-      <el-table-column label="Account">
+      <el-table-column label="RoomType">
         <template scope="scope">
-          <span>{{scope.row.Account}}</span>
+          <span>{{scope.row.RoomType}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="Nickname">
+      <el-table-column align="center" label="OnSeatCount">
         <template scope="scope">
-          <span>{{scope.row.Nick}}</span>
+          <span>{{scope.row.OnSeatCount}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="Balance">
+      <el-table-column align="center" label="BaseChips">
         <template scope="scope">
-          <span>{{scope.row.Money}}</span>
+          <span>{{scope.row.BaseChips}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="RegisterTime">
+
+      <el-table-column align="center" label="CreateTime">
         <template scope="scope">
           <span>{{scope.row.CreateTime}}</span>
         </template>
       </el-table-column>
+
     </el-table>
 
 
@@ -41,10 +43,10 @@
 
 <script>
   import waves from '@/directive/waves/index.js' // 水波纹指令
-  import { queryAgentData } from '@/api/agent'
+  import { queryRoomData } from '@/api/room'
 
   export default {
-    name: 'agentList',
+    name: 'robotList',
     directives: {
       waves
     },
@@ -69,7 +71,7 @@
 
       },
       getList() {
-        queryAgentData(this.listQuery).then(resp => {
+        queryRoomData(this.listQuery).then(resp => {
           this.list = resp.data.data.datas
           this.total = resp.data.data.totalCount
         })

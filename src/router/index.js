@@ -58,10 +58,10 @@ export const asyncRouterMap = [
     ]
   },
   {
-    path: '/extend/pick',
+    path: '/extend/room',
     component: Layout,
     icon: 'table',
-    redirect: '/extend/pick',
+    redirect: '/extend/room',
     name: 'Room',
     meta: {
       title: 'Room',
@@ -69,8 +69,23 @@ export const asyncRouterMap = [
       role: ['admin']
     },
     alwaysShow: true,
-    children: [{ path: 'index', component: _import('extend/pick/index'), name: 'Room Overall' },
-      { path: 'index', component: _import('extend/pick/index'), name: 'Room List' }]
+    children: [{ path: 'index', component: _import('extend/room/index'), name: 'Room List' }
+    ]
+  },
+  {
+    path: '/extend/robot',
+    component: Layout,
+    icon: 'table',
+    redirect: '/extend/robot',
+    name: 'Robot',
+    meta: {
+      title: 'Room',
+      icon: 'component',
+      role: ['admin']
+    },
+    alwaysShow: true,
+    children: [{ path: 'index', component: _import('extend/robot/index'), name: 'Robot List' }
+    ]
   },
   {
     path: '/extend/player',
