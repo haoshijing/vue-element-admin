@@ -34,6 +34,16 @@
         </template>
       </el-table-column>
 
+      <el-table-column align="center" label="set">
+        <template scope="scope">
+          <span>
+            <router-link :to="{name:'Member Setup',params:{guid:scope.row.Guid}}">
+              <div>setup</div>
+            </router-link>
+          </span>
+        </template>
+      </el-table-column>
+
 
     </el-table>
     <div v-show="!listLoading" class="pagination-container">

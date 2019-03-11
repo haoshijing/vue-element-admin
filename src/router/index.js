@@ -123,5 +123,17 @@ export const asyncRouterMap = [
     noDropdown: true,
     children: [{ path: 'index', component: _import('extend/user/index'), name: 'updatePwd' }]
   },
+  {
+    path: '/extend/maintenance',
+    component: Layout,
+    icon: 'table',
+    name: 'Maintenance',
+    redirect: '/extend/maintenance',
+    meta: { role: ['admin'] },
+    alwaysShow: true,
+    children: [
+            { path: 'index', component: _import('extend/maintenance/index'), name: 'maintenance' }
+    ]
+  },
   { path: '*', redirect: '/404', hidden: true }
 ]

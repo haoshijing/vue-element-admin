@@ -62,8 +62,13 @@
 
       <el-table-column  label="operator">
         <template scope="scope">
+
           <el-button  size="small" type="success" @click="handleUpdate(scope.row)">edit
           </el-button>
+          <!--记录弹出层-->
+          <el-button  size="small" type="success" @click="showRrecords(scope.row)">records
+          </el-button>
+
         </template>
       </el-table-column>
 
@@ -100,11 +105,29 @@
       </div>
     </el-dialog>
 
+    <el-dialog  :visible.sync="recordsLoading">
+        <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+            <el-tab-pane label="游戏记录" name="1">
+              <gameList  :guid="guid"/>
+            </el-tab-pane>
+            <el-tab-pane label="转账记录" name="2">
+                <rmoneyList  :guid="guid"/>
+            </el-tab-pane>
+            <el-tab-pane label="充值记录" name="3">
+                <rechargeList  :guid="guid"/>
+            </el-tab-pane>
+            <!--<rechargeList v-if="index === 0"  />-->
+        </el-tabs>
+    </el-dialog>
+
   </div>
 </template>
 
 <script>
   import waves from '@/directive/waves/index.js' // 水波纹指令
+  import rechargeList from './rechargeList'
+  import gameList from './gameList'
+  import rmoneyList from './rmoneyList'
   import { queryMemberSetUp, updatePlayer } from '@/api/playerapi'
 
   export default {
@@ -117,6 +140,7 @@
         list: [],
         total: 0,
         listLoading: false,
+        recordsLoading: false,
         dialogFormVisible: false,
         listQuery: {
           account: '',
@@ -128,12 +152,20 @@
           BindGuid: 0,
           Money: '',
           showIsAgent: ''
-        }
+        },
+        activeName: 1,
+        index: 0
       }
     },
     filters: {},
     created() {
+      this.listQuery.guid = this.$route.params.guid
       this.getList()
+    },
+    components: {
+      rechargeList,
+      gameList,
+      rmoneyList
     },
     methods: {
       handleFilter() {
@@ -181,6 +213,13 @@
             })
           }
         })
+      },
+      // showRrecords
+      showRrecords() {
+        this.recordsLoading = true
+      },
+      handleClick(tab, event) {
+        this.index = tab.index
       }
     }
   }

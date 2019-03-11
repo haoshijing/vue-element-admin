@@ -33,6 +33,17 @@
           <span>{{scope.row.CreateTime}}</span>
         </template>
       </el-table-column>
+
+      <el-table-column align="center" label="set">
+        <template scope="scope">
+          <span>
+            <router-link :to="{name:'Member Setup',params:{guid:scope.row.Guid}}">
+              <div>setup</div>
+            </router-link>
+          </span>
+        </template>
+      </el-table-column>
+
     </el-table>
 
 
