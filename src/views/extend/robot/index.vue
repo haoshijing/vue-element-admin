@@ -124,28 +124,28 @@
           id: 1,
           nickname: 'nickname',
           avatar: 'avatar',
-          money: ' money',
-          win: 'win'
+          money: 10,
+          win: 10
         }, {
           id: 2,
           nickname: 'nickname',
           avatar: 'avatar',
-          money: 'money',
-          win: 'win'
+          money: 10,
+          win: 10
         },
         {
           id: 3,
-          nickname: '2016-05-02',
-          avatar: '王小虎',
-          money: '518 弄',
-          win: '上海市'
+          nickname: 'nickname',
+          avatar: 'avatar',
+          money: 10,
+          win: 10
         },
         {
           id: 4,
-          nickname: '2016-05-02',
-          avatar: '王小虎',
-          money: '上弄',
-          win: '上18 弄'
+          nickname: 'nickname',
+          avatar: 'avatar',
+          money: 10,
+          win: 10
         }
         ],
         updateFormVisible: false,
@@ -171,10 +171,10 @@
         const id = this.tableData.length
         const newRobot = {
           id,
-          nickname: '2016-05-02',
-          avatar: '王小虎',
-          money: '上海市普陀区金沙江路 1518 弄',
-          win: '上海市普陀区金沙江路 1518 弄'
+          nickname: 'nickname',
+          avatar: 'avatar',
+          money: 10,
+          win: 10
         }
         this.tableData.push(newRobot)
       },
