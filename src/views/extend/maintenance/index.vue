@@ -25,15 +25,10 @@
                 </template>
             </el-table-column>
 
-            <el-table-column align="center" label="createTime">
-                <template scope="scope">
-                    <span>{{scope.row.createTime}}</span>
-                </template>
-            </el-table-column>
 
             <el-table-column align="center" label="lastLoginTime">
                 <template scope="scope">
-                    <span>{{scope.row.lastLoginTime}}</span>
+                    <span>{{scope.row.lastLoginTime | timeFilter}}</span>
                 </template>
             </el-table-column>
 
@@ -43,11 +38,6 @@
                 </template>
             </el-table-column>
 
-            <el-table-column align="center" label="lastUpdateTime">
-                <template scope="scope">
-                    <span>{{scope.row.lastUpdateTime}}</span>
-                </template>
-            </el-table-column>
 
             <el-table-column align="center" label="set">
                 <template scope="scope">
@@ -78,7 +68,7 @@
 
             <div slot="footer" class="dialog-footer">
                 <el-button @click="dialogFormVisible = false">Cancel</el-button>
-                <el-button type="primary" @click="updatePlayer">Ok</el-button>
+                <el-button type="primary" @click="createAdmin">Ok</el-button>
             </div>
         </el-dialog>
 
@@ -88,11 +78,19 @@
 <script>
     import waves from '@/directive/waves/index.js' // 水波纹指令
     import { queryAdminData, delAdminData, createAdminData } from '@/api/admin'
-
+    import { parseTime } from '@/utils'
     export default {
       name: 'agentList',
       directives: {
         waves
+      },
+      filters: {
+        timeFilter(time) {
+          if (time) {
+            return parseTime(time)
+          }
+          return ''
+        }
       },
       data() {
         return {
@@ -111,7 +109,6 @@
           }
         }
       },
-      filters: {},
       created() {
         this.getList()
       },
@@ -149,12 +146,19 @@
             }
           })
         },
-        updatePlayer() {
+        createAdmin() {
           createAdminData(this.temp).then(resp => {
-            if (resp.data.data.code === 200) {
+            if (resp.data.data) {
+              this.dialogFormVisible = false
               this.$message({
                 type: 'info',
-                message: `msg: ${resp.data.data}`
+                message: `msg: add succ`
+              })
+              this.getList()
+            } else {
+              this.$message({
+                type: 'error',
+                message: resp.data.msg
               })
             }
           })

@@ -13,15 +13,15 @@
 			<el-dropdown-menu class="user-dropdown" slot="dropdown">
 				<router-link class='inlineBlock' to="/">
 					<el-dropdown-item>
-						首页
+						Index
 					</el-dropdown-item>
 				</router-link>
         <router-link class='inlineBlock' to="/extend/user/index">
           <el-dropdown-item>
-            修改密码
+            Update Pwd
           </el-dropdown-item>
         </router-link>
-				<el-dropdown-item divided><span @click="logout" style="display:block;">退出登录</span></el-dropdown-item>
+				<el-dropdown-item divided><span @click="logout" style="display:block;">logout</span></el-dropdown-item>
 			</el-dropdown-menu>
 		</el-dropdown>
 	</el-menu>
