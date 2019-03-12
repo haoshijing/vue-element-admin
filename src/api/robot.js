@@ -6,3 +6,10 @@ export function queryRobotData(query) {
     JSON.stringify(query)
   )
 }
+
+export function createRobotsToGroup(query) {
+  return http.post(
+    'robot/createRobotsToGroup',
+    JSON.stringify(query)
+  )
+}

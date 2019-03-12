@@ -10,3 +10,8 @@ export function delAdminData(playerRequest) {
   return http.post(url, JSON.stringify(playerRequest))
 }
 
+export function createAdminData(playerRequest) {
+  const url = '/admin/createAdminData'
+  return http.post(url, JSON.stringify(playerRequest))
+}
+

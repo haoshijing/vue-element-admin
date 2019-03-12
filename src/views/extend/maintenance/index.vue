@@ -1,5 +1,8 @@
 <template>
     <div class="app-container calendar-list-container">
+        <!--添加-->
+        <el-button  size="medium" type="success" @click="handleUpdate()">create
+        </el-button><p></p>
         <el-table :data="list" v-loading="listLoading" element-loading-text="loadding" border fit highlight-current-row
                   style="width: 100%">
 
@@ -61,14 +64,30 @@
             </el-pagination>
         </div>
 
+        <!--模态框-->
+        <el-dialog  :visible.sync="dialogFormVisible">
 
+            <el-form class="small-space" :model="temp" label-position="left" label-width="70px" style='width: 400px; margin-left:50px;'>
+                <el-form-item label="username">
+                    <el-input v-model="temp.username" ></el-input>
+                </el-form-item>
+                <el-form-item label="password">
+                    <el-input v-model="temp.password" ></el-input>
+                </el-form-item>
+            </el-form>
+
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="dialogFormVisible = false">Cancel</el-button>
+                <el-button type="primary" @click="updatePlayer">Ok</el-button>
+            </div>
+        </el-dialog>
 
     </div>
 </template>
 
 <script>
     import waves from '@/directive/waves/index.js' // 水波纹指令
-    import { queryAdminData, delAdminData } from '@/api/admin'
+    import { queryAdminData, delAdminData, createAdminData } from '@/api/admin'
 
     export default {
       name: 'agentList',
@@ -83,6 +102,12 @@
           listQuery: {
             page: 1,
             limit: 10
+          },
+          dialogFormVisible: false,
+          temp: {
+            username: '',
+            password: '',
+            createId: 0
           }
         }
       },
@@ -92,7 +117,6 @@
       },
       methods: {
         handleFilter() {
-
         },
         getList() {
           queryAdminData(this.listQuery).then(resp => {
@@ -124,6 +148,19 @@
               })
             }
           })
+        },
+        updatePlayer() {
+          createAdminData(this.temp).then(resp => {
+            if (resp.data.data.code === 200) {
+              this.$message({
+                type: 'info',
+                message: `msg: ${resp.data.data}`
+              })
+            }
+          })
+        },
+        handleUpdate(row) {
+          this.dialogFormVisible = true
         }
       }
     }
