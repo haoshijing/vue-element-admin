@@ -132,20 +132,6 @@
           avatar: 'avatar',
           money: 10,
           win: 10
-        },
-        {
-          id: 3,
-          nickname: 'nickname',
-          avatar: 'avatar',
-          money: 10,
-          win: 10
-        },
-        {
-          id: 4,
-          nickname: 'nickname',
-          avatar: 'avatar',
-          money: 10,
-          win: 10
         }
         ],
         updateFormVisible: false,

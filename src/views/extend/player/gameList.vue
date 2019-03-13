@@ -60,9 +60,11 @@
         return {
           list: [],
           total: 0,
+          guid: 0,
           listLoading: false,
           listQuery: {
             page: 1,
+            guid: 0,
             limit: 10
           }
         }
@@ -76,8 +78,9 @@
 
         },
         getList() {
+          this.listQuery.guid = this.guid
+          console.log(this.guid)
           queryRechargeData(this.listQuery).then(resp => {
-            console.log(resp.data.data.datas)
             this.list = resp.data.data.datas
             this.total = resp.data.data.totalCount
           })

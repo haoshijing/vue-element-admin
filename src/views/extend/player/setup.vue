@@ -139,6 +139,7 @@
       return {
         list: [],
         total: 0,
+        guid: 0,
         listLoading: false,
         recordsLoading: false,
         dialogFormVisible: false,
@@ -160,6 +161,7 @@
     filters: {},
     created() {
       this.listQuery.guid = this.$route.params.guid
+      this.guid = this.$route.params.guid
       this.getList()
     },
     components: {

@@ -145,6 +145,7 @@
                   type: 'info',
                   message: `action: ${resp.data.data}`
                 })
+                this.getList()
               })
             }
           })
