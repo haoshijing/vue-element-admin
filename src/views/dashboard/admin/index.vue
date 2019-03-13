@@ -5,7 +5,7 @@
 			<el-col :span="6">
 				<el-card class="box-card">
 
-					<span class="display_name">欢迎您:{{name}}管理员</span>
+					<span class="display_name">Welcome:{{name}}</span>
 
 				</el-card>
 			</el-col>

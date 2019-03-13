@@ -1,14 +1,14 @@
 <template>
   <div style="width: 300px">
   <el-form :model="form" :rules="rules" ref="form" label-width="80px">
-    <el-form-item label="旧密码">
+    <el-form-item label="Old Password">
       <el-input v-model="form.oldPwd" type="password" size="small"></el-input>
     </el-form-item>
-    <el-form-item label="新密码">
+    <el-form-item label="New Password">
       <el-input v-model="form.newPwd" type="password" size="small"></el-input>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" @click="onSubmit">立即修改</el-button>
+      <el-button type="primary" @click="onSubmit">OK</el-button>
     </el-form-item>
   </el-form>
   </div>
@@ -24,10 +24,10 @@
           },
           rules: {
             oldPwd: [
-              { required: true, message: '旧密码不能为空', trigger: 'blur' }
+              { required: true, message: 'not null', trigger: 'blur' }
             ],
             newPwd: [
-              { required: true, message: '新密码不能为空', trigger: 'blur' }
+              { required: true, message: 'not null', trigger: 'blur' }
             ]
           }
         }
