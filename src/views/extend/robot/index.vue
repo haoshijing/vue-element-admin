@@ -3,6 +3,8 @@
     <!--添加-->
     <el-button  size="medium" type="success" @click="show()">create
     </el-button><p></p>
+    <el-button  size="medium" type="success" @click="handleUpdate()">SetRobitConfig
+    </el-button><p></p>
     <el-table :data="list" v-loading="listLoading" element-loading-text="loadding" border fit highlight-current-row
               style="width: 100%">
 
@@ -46,27 +48,20 @@
       </el-table-column>
 
 
-      <el-table-column  label="operator">
-        <template scope="scope">
-          <el-button  size="small" type="success" @click="handleUpdate(scope.row)">edit
-          </el-button>
-        </template>
-      </el-table-column>
-
     </el-table>
 
     <el-dialog  :visible.sync="updateFormVisible">
       <el-form class="small-space" :model="temp" label-position="left" label-width="70px" style='width: 400px; margin-left:50px;'>
         <el-form-item label="Guid">
-          <span>{{temp.Guid}}</span>
+          <el-input v-model="temp.guid" ></el-input>
         </el-form-item>
 
         <el-form-item label="InitMoney">
-          <el-input v-model="temp.InitMoney"></el-input>
+          <el-input v-model="temp.initMoney"></el-input>
         </el-form-item>
 
         <el-form-item label="WinPercent">
-          <el-input v-model="temp.WinPercent" ></el-input>
+          <el-input v-model="temp.winPercent" ></el-input>
         </el-form-item>
 
 
@@ -96,7 +91,7 @@
           </div>
         </div>
       </div>
-      <el-button @click="addRobot">添加机器人</el-button>
+      <el-button @click="addRobot">Add</el-button>
 
 
       <!--表单结束-->
@@ -111,7 +106,7 @@
 
 <script>
   import waves from '@/directive/waves/index.js' // 水波纹指令
-  import { queryRobotData, createRobotsToGroup } from '@/api/robot'
+  import { queryRobotData, createRobotsToGroup, updateRobotConfig } from '@/api/robot'
   export default {
     name: 'robotList',
     directives: {
@@ -194,11 +189,16 @@
         this.listQuery.page = val
         this.getList()
       },
-      handleUpdate(row) {
+      handleUpdate() {
         this.updateFormVisible = true
-        this.temp = row
       },
       updateRobot() {
+        updateRobotConfig(this.temp).then(resp => {
+          this.$message({
+            type: 'info',
+            message: `setOk`
+          })
+        })
         this.updateFormVisible = false
       },
       show() {

@@ -7,6 +7,13 @@ export function queryRobotData(query) {
   )
 }
 
+export function updateRobotConfig(query) {
+  return http.post(
+    'robot/updateRobotConfig',
+    JSON.stringify(query)
+  )
+}
+
 export function createRobotsToGroup(query) {
   return http.post(
     'robot/createRobotsToGroup',
