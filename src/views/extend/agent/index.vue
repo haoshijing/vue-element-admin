@@ -38,7 +38,7 @@
         <template scope="scope">
           <span>
             <router-link :to="{name:'Member Setup',params:{guid:scope.row.Guid}}">
-              <div>setup</div>
+             <el-button  size="small" type="success">detail</el-button>
             </router-link>
           </span>
         </template>

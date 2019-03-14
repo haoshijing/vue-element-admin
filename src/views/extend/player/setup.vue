@@ -201,6 +201,7 @@
         }
         updatePlayer(data).then(resp => {
           const updateRet = resp.data.data
+          const msg = resp.data.msg
           if (updateRet) {
             this.dialogFormVisible = false
             this.getList()
@@ -210,7 +211,7 @@
             })
           } else {
             this.$message({
-              message: 'fail',
+              message: msg,
               type: 'error'
             })
           }

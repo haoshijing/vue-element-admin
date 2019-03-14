@@ -14,9 +14,9 @@ export function updateRobotConfig(query) {
   )
 }
 
-export function createRobotsToGroup(query) {
+export function createRobotPlayer(data) {
   return http.post(
-    'robot/createRobotsToGroup',
-    JSON.stringify(query)
+    'robot/createRobotPlayer',
+    JSON.stringify(data)
   )
 }

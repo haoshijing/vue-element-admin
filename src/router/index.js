@@ -111,7 +111,7 @@ export const asyncRouterMap = [
     meta: { role: ['admin'] },
     alwaysShow: true,
     children: [
-      { path: 'setup', component: _import('extend/player/setup'), name: 'Member Setup' },
+      { path: 'setup', component: _import('extend/player/setup'), name: 'Member Search' },
       { path: 'index', component: _import('extend/player/index'), name: 'Member List' }
     ]
   },
