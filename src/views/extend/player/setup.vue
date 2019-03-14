@@ -111,10 +111,10 @@
               <gameList  :guid="guid"/>
             </el-tab-pane>
             <el-tab-pane label="Recharge Records" name="2">
-                <rmoneyList  :guid="guid"/>
+                <rechargeList :guid="guid"/>
             </el-tab-pane>
             <el-tab-pane label="RMoney Change Records" name="3">
-                <rechargeList  :guid="guid"/>
+                <rmoneyList   :guid="guid"/>
             </el-tab-pane>
             <!--<rechargeList v-if="index === 0"  />-->
         </el-tabs>
