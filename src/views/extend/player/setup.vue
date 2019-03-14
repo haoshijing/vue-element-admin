@@ -66,7 +66,7 @@
           <el-button  size="small" type="success" @click="handleUpdate(scope.row)">edit
           </el-button>
           <!--记录弹出层-->
-          <el-button  size="small" type="success" @click="showRrecords(scope.row)">records
+          <el-button  size="small" type="success" @click="showRecords(scope.row)">records
           </el-button>
 
         </template>
@@ -106,14 +106,14 @@
     </el-dialog>
 
     <el-dialog  :visible.sync="recordsLoading">
-        <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
-            <el-tab-pane label="游戏记录" name="1">
+        <el-tabs v-model="activeName" type="card" @tab-click="handleClick" >
+            <el-tab-pane label="RAccount Records" name="1" >
               <gameList  :guid="guid"/>
             </el-tab-pane>
-            <el-tab-pane label="转账记录" name="2">
+            <el-tab-pane label="Recharge Records" name="2">
                 <rmoneyList  :guid="guid"/>
             </el-tab-pane>
-            <el-tab-pane label="充值记录" name="3">
+            <el-tab-pane label="RMoney Change Records" name="3">
                 <rechargeList  :guid="guid"/>
             </el-tab-pane>
             <!--<rechargeList v-if="index === 0"  />-->
@@ -126,7 +126,7 @@
 <script>
   import waves from '@/directive/waves/index.js' // 水波纹指令
   import rechargeList from './rechargeList'
-  import gameList from './gameList'
+  import gameList from './rAccountList.vue'
   import rmoneyList from './rmoneyList'
   import { queryMemberSetUp, updatePlayer } from '@/api/playerapi'
 
@@ -154,7 +154,7 @@
           Money: '',
           showIsAgent: ''
         },
-        activeName: 1,
+        activeName: '1',
         index: 0
       }
     },
@@ -218,7 +218,7 @@
         })
       },
       // showRrecords
-      showRrecords() {
+      showRecords() {
         this.recordsLoading = true
       },
       handleClick(tab, event) {

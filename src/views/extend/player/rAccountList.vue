@@ -3,42 +3,87 @@
         <el-table :data="list" v-loading="listLoading" element-loading-text="loadding" border fit highlight-current-row
                   style="width: 100%">
 
-            <el-table-column align="center" label="Guid">
+            <el-table-column align="center" label="Date">
+                <template scope="scope">
+                    <span>{{scope.row.date}}</span>
+                </template>
+            </el-table-column>
+
+            <el-table-column label="Time">
+                <template scope="scope">
+                    <span>{{scope.row.time}}</span>
+                </template>
+            </el-table-column>
+
+
+            <el-table-column label="RoomID">
+                <template scope="scope">
+                    <span>{{scope.row.roomId}}</span>
+                </template>
+            </el-table-column>
+
+            <el-table-column align="center" label="Round">
+                <template scope="scope">
+                    <span>{{scope.row.round}}</span>
+                </template>
+            </el-table-column>
+
+            <el-table-column align="center" label="PlayerID">
                 <template scope="scope">
                     <span>{{scope.row.guid}}</span>
                 </template>
             </el-table-column>
 
-            <el-table-column label="Account">
+            <el-table-column align="center" label="GameRules">
                 <template scope="scope">
-                    <span>{{scope.row.orderId}}</span>
+                    <span>{{scope.row.gameRules}}</span>
                 </template>
             </el-table-column>
 
 
-            <el-table-column label="Nickname">
-                <template scope="scope">
-                    <span>{{scope.row.phoneNumber}}</span>
-                </template>
-            </el-table-column>
+          <el-table-column align="center" label="Result">
+            <template scope="scope">
+              <span>{{scope.row.result}}</span>
+            </template>
+          </el-table-column>
 
-            <el-table-column align="center" label="Balance">
-                <template scope="scope">
-                    <span>{{scope.row.rechargeGold}}</span>
-                </template>
-            </el-table-column>
 
-            <el-table-column align="center" label="RegisterTime">
-                <template scope="scope">
-                    <span>{{scope.row.rechargeMoney}}</span>
-                </template>
-            </el-table-column>
+          <el-table-column align="center" label="Amount">
+            <template scope="scope">
+              <span>{{scope.row.amount}}</span>
+            </template>
+          </el-table-column>
 
-            <el-table-column align="center" label="RegisterTime">
-                <template scope="scope">
-                    <span>{{scope.row.createTime}}</span>
-                </template>
-            </el-table-column>
+          <el-table-column align="center" label="WinOrLose">
+            <template scope="scope">
+              <span>{{scope.row.winOrLose}}</span>
+            </template>
+          </el-table-column>
+
+          <el-table-column align="center" label="Commission">
+            <template scope="scope">
+              <span>{{scope.row.commission}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column align="center" label="CommissionAmout">
+            <template scope="scope">
+              <span>{{scope.row.commissionAmout}}</span>
+            </template>
+          </el-table-column>
+
+          <el-table-column align="center" label="PlayerGain">
+            <template scope="scope">
+              <span>{{scope.row.playerGain}}</span>
+            </template>
+          </el-table-column>
+
+
+          <el-table-column align="center" label="SystemEatChips">
+            <template scope="scope">
+              <span>{{scope.row.systemEatChips}}</span>
+            </template>
+          </el-table-column>
+
 
         </el-table>
         <div v-show="!listLoading" class="pagination-container">
@@ -50,7 +95,7 @@
 </template>
 
 <script>
-    import { queryRechargeData } from '@/api/records.js'
+    import { queryRAccountRecords } from '@/api/records.js'
     export default {
       props: ['guid'],
       name: 'agentList',
@@ -60,7 +105,6 @@
         return {
           list: [],
           total: 0,
-          guid: 0,
           listLoading: false,
           listQuery: {
             page: 1,
@@ -79,8 +123,7 @@
         },
         getList() {
           this.listQuery.guid = this.guid
-          console.log(this.guid)
-          queryRechargeData(this.listQuery).then(resp => {
+          queryRAccountRecords(this.listQuery).then(resp => {
             this.list = resp.data.data.datas
             this.total = resp.data.data.totalCount
           })

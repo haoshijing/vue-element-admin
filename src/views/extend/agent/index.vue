@@ -37,7 +37,7 @@
       <el-table-column align="center" label="set">
         <template scope="scope">
           <span>
-            <router-link :to="{name:'Member Setup',params:{guid:scope.row.Guid}}">
+            <router-link :to="{name:'Member Search',params:{guid:scope.row.Guid}}">
              <el-button  size="small" type="success">detail</el-button>
             </router-link>
           </span>
