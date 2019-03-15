@@ -219,7 +219,7 @@
       // showRrecords
       showRecords(data) {
         this.recordsLoading = true
-        this.guid = data.guid
+        this.guid = data.Guid
       },
       handleClick(tab, event) {
         this.index = tab.index
