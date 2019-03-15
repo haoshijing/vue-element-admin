@@ -160,8 +160,6 @@
     },
     filters: {},
     created() {
-      this.listQuery.guid = this.$route.params.guid
-      this.guid = this.$route.params.guid
       this.getList()
     },
     components: {
@@ -218,8 +216,9 @@
         })
       },
       // showRrecords
-      showRecords() {
+      showRecords(data) {
         this.recordsLoading = true
+        this.guid = data.Guid
       },
       handleClick(tab, event) {
         this.index = tab.index

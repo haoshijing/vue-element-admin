@@ -32,9 +32,9 @@
       </el-table-column>
 
 
-      <el-table-column align="center" label="WinPercent">
+      <el-table-column align="center" label="WinPermillage">
         <template scope="scope">
-          <span>{{scope.row.WinPermillage}}</span>
+          <span>{{scope.row.WinPercent}}</span>
         </template>
       </el-table-column>
 
@@ -70,7 +70,7 @@
           <el-input v-model="temp.initMoney"></el-input>
         </el-form-item>
 
-        <el-form-item label="WinPercent">
+        <el-form-item label="WinPermillage">
           <el-input v-model="temp.winPercent" ></el-input>
         </el-form-item>
 
