@@ -33,7 +33,7 @@ service.interceptors.response.use(
         type: 'error',
         duration: 5 * 1000
       })
-      if (res.code === -1) {
+      if (res.code === -1 || res.code === 501) {
         store.dispatch('FedLogOut').then(() => {
           location.reload()// 为了重新实例化vue-router对象 避免bug
         })

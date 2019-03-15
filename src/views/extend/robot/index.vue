@@ -34,7 +34,7 @@
 
       <el-table-column align="center" label="WinPermillage">
         <template scope="scope">
-          <span>{{scope.row.WinPercent}}</span>
+          <span>{{scope.row.WinPermillage}}</span>
         </template>
       </el-table-column>
 
@@ -183,10 +183,19 @@
       },
       createRobot() {
         createRobotPlayer(this.temp).then(resp => {
-          this.$message({
-            type: 'info',
-            message: `create succ`
-          })
+          const updateRet = resp.data.data
+          const msg = resp.data.msg
+          if (updateRet) {
+            this.$message({
+              type: 'info',
+              message: `create succ`
+            })
+          } else {
+            this.$message({
+              type: 'error',
+              message: msg
+            })
+          }
         })
         this.getList()
         this.updateFormVisible = false

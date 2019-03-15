@@ -39,13 +39,13 @@
               const succ = response.data.data
               if (succ) {
                 this.$message({
-                  message: '重置成功,请退出后重新登录',
+                  message: 'reset ok',
                   type: 'success'
                 })
               } else {
                 this.$message({
                   message: response.data.msg,
-                  type: 'warning'
+                  type: 'error'
                 })
               }
             })

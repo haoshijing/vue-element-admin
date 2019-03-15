@@ -1,13 +1,13 @@
 <template>
   <div class="login-container">
     <el-form class="card-box login-form" autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left">
-      <h3 class="title">系统登录</h3>
+      <h3 class="title">System Login</h3>
 
       <el-form-item prop="username">
         <span class="svg-container svg-container_login">
           <icon-svg icon-class="user" />
         </span>
-        <el-input name="username" type="text" v-model="loginForm.name" autoComplete="on" placeholder="请输入用户名" />
+        <el-input name="username" type="text" v-model="loginForm.name" autoComplete="on" placeholder="Input Name" />
       </el-form-item>
 
       <el-form-item prop="password">
@@ -15,11 +15,11 @@
           <icon-svg icon-class="password" />
         </span>
         <el-input name="password" :type="pwdType" @keyup.enter.native="handleLogin" v-model="loginForm.password" autoComplete="on"
-          placeholder="请输入密码" />
+          placeholder="Input Pwd" />
         <span class='show-pwd' @click='showPwd'><icon-svg icon-class="eye" /></span>
       </el-form-item>
 
-      <el-button type="primary" style="width:100%;margin-bottom:30px;" :loading="loading" @click.native.prevent="handleLogin">登录</el-button>
+      <el-button type="primary" style="width:100%;margin-bottom:30px;" :loading="loading" @click.native.prevent="handleLogin">Login</el-button>
 
       <div class='tips'>{{loginTips}}</div>
       <!--
@@ -48,14 +48,14 @@ export default {
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!isvalidUsername(value)) {
-        callback(new Error('请输入正确的用户名'))
+        callback(new Error('please input right name'))
       } else {
         callback()
       }
     }
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
-        callback(new Error('密码不能小于6位'))
+        callback(new Error('length can not be less than 6'))
       } else {
         callback()
       }
@@ -92,7 +92,7 @@ export default {
             if (succ) {
               this.$router.push({ path: '/' })
             } else {
-              this.loginTips = '用户名或者密码错误'
+              this.loginTips = 'username or passWord error'
             }
           }).catch(() => {
             this.loading = false
