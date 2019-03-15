@@ -107,13 +107,13 @@
 
     <el-dialog  :visible.sync="recordsLoading">
         <el-tabs v-model="activeName" type="card" @tab-click="handleClick" >
-            <el-tab-pane label="RAccount Records" name="1" >
+            <el-tab-pane label="Account Records" name="1" >
               <gameList  :guid="guid"/>
             </el-tab-pane>
             <el-tab-pane label="Recharge Records" name="2">
                 <rechargeList :guid="guid"/>
             </el-tab-pane>
-            <el-tab-pane label="RMoney Change Records" name="3">
+            <el-tab-pane label="Money Change Records" name="3">
                 <rmoneyList   :guid="guid"/>
             </el-tab-pane>
             <!--<rechargeList v-if="index === 0"  />-->

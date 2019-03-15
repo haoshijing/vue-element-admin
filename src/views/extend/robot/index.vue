@@ -190,6 +190,8 @@
               type: 'info',
               message: `create succ`
             })
+            this.getList()
+            this.createRobotFormVisible = false
           } else {
             this.$message({
               type: 'error',
@@ -197,8 +199,6 @@
             })
           }
         })
-        this.getList()
-        this.updateFormVisible = false
       }
     }
   }
