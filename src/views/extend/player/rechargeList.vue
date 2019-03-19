@@ -3,42 +3,49 @@
         <el-table :data="list" v-loading="listLoading" element-loading-text="loadding" border fit highlight-current-row
                   style="width: 100%">
 
-            <el-table-column align="center" label="Guid">
-                <template scope="scope">
-                    <span>{{scope.row.guid}}</span>
-                </template>
-            </el-table-column>
+          <el-table-column align="center" label="OrderId">
+            <template scope="scope">
+              <span>{{scope.row.orderId}}</span>
+            </template>
+          </el-table-column>
 
-            <el-table-column label="Account">
-                <template scope="scope">
-                    <span>{{scope.row.orderId}}</span>
-                </template>
-            </el-table-column>
+          <el-table-column label="Guid">
+            <template scope="scope">
+              <span>{{scope.row.guid}}</span>
+            </template>
+          </el-table-column>
 
 
-            <el-table-column label="Nickname">
-                <template scope="scope">
-                    <span>{{scope.row.phoneNumber}}</span>
-                </template>
-            </el-table-column>
+          <el-table-column label="PhoneNumber">
+            <template scope="scope">
+              <span>{{scope.row.phoneNumber}}</span>
+            </template>
+          </el-table-column>
 
-            <el-table-column align="center" label="Balance">
-                <template scope="scope">
-                    <span>{{scope.row.rechargeGold}}</span>
-                </template>
-            </el-table-column>
+          <el-table-column align="center" label="RechargeMoney">
+            <template scope="scope">
+              <span>{{scope.row.rechargeMoney}}</span>
+            </template>
+          </el-table-column>
 
-            <el-table-column align="center" label="RegisterTime">
-                <template scope="scope">
-                    <span>{{scope.row.rechargeMoney}}</span>
-                </template>
-            </el-table-column>
+          <el-table-column align="center" label="RechargeGold">
+            <template scope="scope">
+              <span>{{scope.row.rechargeGold}}</span>
+            </template>
+          </el-table-column>
 
-            <el-table-column align="center" label="RegisterTime">
-                <template scope="scope">
-                    <span>{{scope.row.createTime}}</span>
-                </template>
-            </el-table-column>
+          <el-table-column align="center" label="RechargeMoney">
+            <template scope="scope">
+              <span>{{scope.row.rechargeMoney}}</span>
+            </template>
+          </el-table-column>
+
+          <el-table-column align="center" label="CreateTime">
+            <template scope="scope">
+              <span>{{scope.row.createTime}}</span>
+            </template>
+          </el-table-column>
+
 
         </el-table>
         <div v-show="!listLoading" class="pagination-container">
@@ -75,10 +82,10 @@
       },
       methods: {
         handleFilter() {
-
+          this.getList()
         },
         getList() {
-          this.listQuery.guid = this.guid
+          this.listQuery.playerId = this.guid
           queryRechargeData(this.listQuery).then(resp => {
             console.log(resp.data.data.datas)
             this.list = resp.data.data.datas

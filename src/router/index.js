@@ -116,6 +116,21 @@ export const asyncRouterMap = [
     ]
   },
   {
+    path: '/extend/transaction',
+    component: Layout,
+    icon: 'table',
+    name: 'Transaction',
+    redirect: '/extend/transaction',
+    meta: { role: ['admin'] },
+    alwaysShow: true,
+    children: [
+      { path: 'account', component: _import('extend/transaction/account'), name: 'Account Records' },
+      { path: 'recharge', component: _import('extend/transaction/recharge'), name: 'Recharge Records' },
+      { path: 'money', component: _import('extend/transaction/moneychange'), name: 'Money Change Records' },
+      { path: 'daily', component: _import('extend/transaction/daily'), name: 'Daily Records' }
+    ]
+  },
+  {
     path: '/extend/user/',
     component: Layout,
     icon: 'table',

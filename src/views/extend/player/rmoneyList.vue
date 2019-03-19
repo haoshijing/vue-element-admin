@@ -78,7 +78,7 @@
 
         },
         getList() {
-          this.listQuery.guid = this.guid
+          this.listQuery.playerId = this.guid
           queryRmoneyChangeData(this.listQuery).then(resp => {
             console.log(resp.data.data.datas)
             this.list = resp.data.data.datas

@@ -22,7 +22,14 @@
                 </template>
             </el-table-column>
 
-            <el-table-column align="center" label="Round">
+          <el-table-column label="RoomGuid">
+            <template scope="scope">
+              <span>{{scope.row.roomGuid}}</span>
+            </template>
+          </el-table-column>
+
+
+          <el-table-column align="center" label="Round">
                 <template scope="scope">
                     <span>{{scope.row.round}}</span>
                 </template>
@@ -122,7 +129,7 @@
 
         },
         getList() {
-          this.listQuery.guid = this.guid
+          this.listQuery.playerId = this.guid
           queryRAccountRecords(this.listQuery).then(resp => {
             this.list = resp.data.data.datas
             this.total = resp.data.data.totalCount
