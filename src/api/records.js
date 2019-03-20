@@ -15,3 +15,12 @@ export function queryRmoneyChangeData(playerRequest) {
   return http.post(url, JSON.stringify(playerRequest))
 }
 
+export function queryDailyList(request) {
+  const url = '/daily/queryDailyRecords'
+  return http.post(url, JSON.stringify(request))
+}
+
+export function queryRechargeSum(request) {
+  const url = '/record/queryRechargeSum'
+  return http.post(url, JSON.stringify(request))
+}

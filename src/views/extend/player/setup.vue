@@ -66,8 +66,7 @@
           <el-button  size="small" type="success" @click="handleUpdate(scope.row)">edit
           </el-button>
           <!--记录弹出层-->
-          <el-button  size="small" type="success" @click="showRecords(scope.row)">records
-          </el-button>
+
 
         </template>
       </el-table-column>

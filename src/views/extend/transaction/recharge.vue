@@ -4,7 +4,7 @@
       <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" placeholder="PlayerID"
                 v-model="listQuery.playerId">
       </el-input>
-      <div class="block">
+
         <el-date-picker
           v-model="listQuery.time"
           type="daterange"
@@ -12,11 +12,16 @@
           end-placeholder="end"
           :default-time="['12:00:00']">
         </el-date-picker>
-      </div>
+
       <el-button class="filter-item" type="primary" v-waves icon="search" @click="handleFilter">Search</el-button>
+
+      <div>
+        <span> totalRechargeMoney: {{totalRechargeMoney}}</span>
+        <span> totalRechargeGold: {{totalRechargeGold}}</span>
+      </div>
     </div>
     <el-table :data="list" v-loading="listLoading" element-loading-text="loadding" border fit highlight-current-row
-              style="width: 100%">
+              style="width: 100%" >
 
       <el-table-column align="center" label="OrderId">
         <template scope="scope">
@@ -63,7 +68,9 @@
 
     </el-table>
     <div v-show="!listLoading" class="pagination-container">
-      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="listQuery.page"
+      <el-pagination @size-change="handleSizeChange"
+                     @current-change="handleCurrentChange"
+                     :current-page.sync="listQuery.page"
                      :page-sizes="[10,20,30, 50]" :page-size="listQuery.limit" layout="total, sizes, prev, pager, next, jumper" :total="total">
       </el-pagination>
     </div>
@@ -72,7 +79,7 @@
 
 <script>
   import waves from '@/directive/waves/index.js' // 水波纹指令
-  import { queryRechargeData } from '@/api/records.js'
+  import { queryRechargeData, queryRechargeSum } from '@/api/records.js'
   export default {
     name: 'RechargeRecords',
     directives: {
@@ -82,6 +89,8 @@
       return {
         list: [],
         total: 0,
+        totalRechargeMoney: '',
+        totalRechargeGold: '',
         listLoading: false,
         listQuery: {
           page: 1,
@@ -113,6 +122,10 @@
         queryRechargeData(this.listQuery).then(resp => {
           this.list = resp.data.data.datas
           this.total = resp.data.data.totalCount
+        })
+        queryRechargeSum(this.listQuery).then(resp => {
+          this.totalRechargeMoney = resp.data.data.totalRechargeMoney
+          this.totalRechargeGold = resp.data.data.totalRechargeGold
         })
       },
       handleSizeChange(val) {
