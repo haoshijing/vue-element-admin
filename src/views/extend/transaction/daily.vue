@@ -22,31 +22,31 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="sumBetAmount">
+      <el-table-column label="totalBetAmount">
         <template scope="scope">
           <span>{{scope.row.sumBetAmount}}</span>
         </template>
       </el-table-column>
 
 
-      <el-table-column label="sumPlayerCount">
+      <el-table-column label="totalPlayerCount">
         <template scope="scope">
           <span>{{scope.row.sumPlayerCount}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="sumRoomCount">
+      <el-table-column label="totalRoomCount">
         <template scope="scope">
           <span>{{scope.row.sumRoomCount}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="sumCommissionAmount">
+      <el-table-column align="center" label="totalCommissionAmount">
         <template scope="scope">
           <span>{{scope.row.sumCommissionAmount}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="sumSystemEatChips">
+      <el-table-column align="center" label="totalSystemEatChips">
         <template scope="scope">
           <span>{{scope.row.sumSystemEatChips}}</span>
         </template>
@@ -66,12 +66,18 @@
       waves
     },
     data() {
+      const end = new Date()
+      const start = new Date()
+      start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
       return {
         list: [],
         total: 0,
         listLoading: false,
         listQuery: {
-          time: []
+          time: [
+            start,
+            end
+          ]
         }
       }
     },
